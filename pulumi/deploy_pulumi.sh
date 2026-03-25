@@ -61,6 +61,8 @@ cp __main__.py *.tftpl "$WORKSPACE_DIR/"
 # Execute Pulumi inside the workspace container
 cd "$WORKSPACE_DIR"
 source venv/bin/activate
+# Ensure a default stack is initialized for the local backend to prevent interactive prompts
+pulumi stack select dev 2>/dev/null || pulumi stack init dev
 
 echo "Setting Pulumi Configuration bindings..."
 pulumi config set prefix "$DEPLOYMENT_NAME"
@@ -83,7 +85,7 @@ echo "==========================================================="
 echo "Deployment successfully provisioned!"
 echo ""
 echo "Credentials saved! Run: export KUBECONFIG=kubeconfig.yaml"
-echo "You can now return to the toolkit root and execute './run_mixtral_test.sh' to automatically kick off AI training."
+echo "You can validate the cluster's multi-NIC RDMA network instantly by executing: ./run_nccl_test.sh"
 echo ""
 echo "NOTE: To cleanly teardown the cluster, simply run:"
 echo "cd $WORKSPACE_DIR && pulumi destroy"

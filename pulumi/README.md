@@ -46,14 +46,21 @@ chmod +x deploy_pulumi.sh
 4. Using the newly created cluster's credentials, the native `pulumi-kubernetes` provider synchronously applies all JobSet/Kueue/RDMA CRD resources straight onto the cluster.
 
 ### 3. Fetching Credentials
-Once Pulumi succeeds, your cluster is fully online and ready for AI execution. The wrapper script automatically exports your credentials to the underlying template directory:
+After the script completes successfully, retrieve your cluster credentials utilizing standard `gcloud` format:
 ```bash
-export KUBECONFIG=kubeconfig.yaml
+gcloud container clusters get-credentials <DEPLOYMENT_NAME> --region <REGION> --project <PROJECT_ID>
 ```
 
-*(Alternatively, run the standard `gcloud container clusters get-credentials <NAME> --region <REGION>` to map them locally.)*
+### 4. Validating Network Performance (NCCL)
+Once your cluster is active and your `KUBECONFIG` is exported, you can dynamically validate the RDMA interconnect bandwidth directly from the `pulumi` directory:
 
-### 4. Teardown
+```bash
+./run_nccl_test.sh
+```
+
+This automated bash script autonomously bootstraps a distributed PyTorch `JobSet` across your multi-NIC workers and aggregates the physical bus bandwidth.
+
+### 5. Teardown
 To cleanly destroy the cluster and release the A3 Ultra reservations, you must execute Pulumi from inside the isolated workspace directory it created:
 
 ```bash
