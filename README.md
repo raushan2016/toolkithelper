@@ -56,7 +56,7 @@ The easiest way to deploy this toolkit is by using Google Cloud Shell, which com
 3. **Get Kubectl Credentials**
    After the script completes successfully, retrieve your cluster credentials utilizing standard `gcloud` format:
    ```bash
-   gcloud container clusters get-credentials <DEPLOYMENT_NAME> --zone <ZONE> --project <PROJECT_ID>
+   gcloud container clusters get-credentials <DEPLOYMENT_NAME> --region <REGION> --project <PROJECT_ID>
    ```
 
 4. **Run Performance Diagnostics (Optional)**

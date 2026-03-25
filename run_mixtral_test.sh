@@ -9,6 +9,11 @@ if [ ! -f "cluster.conf" ]; then
     exit 1
 fi
 source cluster.conf
+export GCS_BUCKET
+export GCS_TRAINING_BUCKET
+export GCS_CHECKPOINT_BUCKET
+export PROJECT_ID
+export REGION
 
 export KUEUE_NAME="a3-ultra"
 
@@ -24,16 +29,38 @@ echo "Configuring Mixtral-8x7B Training for $NUM_NODES nodes ($NUM_GPUS GPUs tot
 export GLOBAL_BATCH_SIZE=$((16 * NUM_NODES))
 
 echo "Verifying GCS Prerequisites (HNS Enabled Regional Buckets)..."
+
+PROJECT_NUMBER=$(gcloud projects describe "$PROJECT_ID" --format="value(projectNumber)")
+
 for BUCKET in "$GCS_TRAINING_BUCKET" "$GCS_CHECKPOINT_BUCKET"; do
     if ! gcloud storage buckets describe "gs://${BUCKET}" --project="$PROJECT_ID" &>/dev/null; then
         echo "Creating bucket gs://${BUCKET} with HNS enabled in region ${REGION}..."
         gcloud storage buckets create "gs://${BUCKET}" \
             --project="$PROJECT_ID" \
             --location="$REGION" \
-            --enable-hierarchical-namespace
+            --enable-hierarchical-namespace \
+            --uniform-bucket-level-access
     else
         echo "Bucket gs://${BUCKET} already exists."
     fi
+    
+    echo "Ensuring GKE Service Agent has roles/storage.legacyBucketReader on gs://${BUCKET}..."
+    gcloud storage buckets add-iam-policy-binding "gs://${BUCKET}" \
+        --project="$PROJECT_ID" \
+        --member="serviceAccount:service-${PROJECT_NUMBER}@container-engine-robot.iam.gserviceaccount.com" \
+        --role="roles/storage.legacyBucketReader" >/dev/null
+
+    echo "Ensuring Compute Engine default service account has roles/storage.admin on gs://${BUCKET}..."
+    gcloud storage buckets add-iam-policy-binding "gs://${BUCKET}" \
+        --project="$PROJECT_ID" \
+        --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+        --role="roles/storage.admin" >/dev/null
+
+    echo "Ensuring GKE Workload Identity Pool has roles/storage.admin on gs://${BUCKET}..."
+    gcloud storage buckets add-iam-policy-binding "gs://${BUCKET}" \
+        --project="$PROJECT_ID" \
+        --member="principal://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/${PROJECT_ID}.svc.id.goog/subject/ns/default/sa/default" \
+        --role="roles/storage.admin" >/dev/null
 done
 
 echo "Ensuring dataset is present in training bucket..."
