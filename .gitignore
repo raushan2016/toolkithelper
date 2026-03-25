@@ -1,5 +1,6 @@
-# Ignore all directories (which includes .ghpc, terraform, and dynamic cluster state folders)
 */
+!pulumi/
+pulumi/.pulumi_cluster/
 # Ignore generated and backup files
 gke-h200.yaml
 cluster.conf.bak

@@ -1,0 +1,67 @@
+# PV & PVC for Training Data
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-training-${JOB_PREFIX}
+spec:
+  accessModes:
+  - ReadOnlyMany
+  capacity:
+    storage: 100Gi
+  storageClassName: gcsfusecsi-training
+  claimRef:
+    namespace: default
+    name: pvc-training-${JOB_PREFIX}
+  mountOptions:
+    - implicit-dirs
+  csi:
+    driver: gcsfuse.csi.storage.gke.io
+    volumeHandle: ${GCS_TRAINING_BUCKET}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-training-${JOB_PREFIX}
+  namespace: default
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Gi
+  volumeName: pv-training-${JOB_PREFIX}
+  storageClassName: gcsfusecsi-training
+---
+# PV & PVC for Checkpointing Data
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-checkpoint-${JOB_PREFIX}
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  storageClassName: gcsfusecsi-checkpointing
+  claimRef:
+    namespace: default
+    name: pvc-checkpoint-${JOB_PREFIX}
+  mountOptions:
+    - implicit-dirs
+  csi:
+    driver: gcsfuse.csi.storage.gke.io
+    volumeHandle: ${GCS_CHECKPOINT_BUCKET}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-checkpoint-${JOB_PREFIX}
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  volumeName: pv-checkpoint-${JOB_PREFIX}
+  storageClassName: gcsfusecsi-checkpointing
