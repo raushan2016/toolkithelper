@@ -1,6 +1,7 @@
 */
 !pulumi/
-pulumi/.pulumi_cluster/
+pulumi/*/
+pulumi/.*/
 # Ignore generated and backup files
 gke-h200.yaml
 cluster.conf.bak

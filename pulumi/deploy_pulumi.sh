@@ -14,6 +14,7 @@
 # limitations under the License.
 
 set -eu
+# Configure headless local state so users aren't prompted for cloud SaaS logins
 export PULUMI_CONFIG_PASSPHRASE=""
 
 cd "$(dirname "$0")"
@@ -30,7 +31,7 @@ echo "==========================================================="
 echo "   Initialize Pulumi A3 Ultra GKE Cluster Recipe          "
 echo "==========================================================="
 
-WORKSPACE_DIR=".pulumi_cluster"
+WORKSPACE_DIR=".pulumi_${DEPLOYMENT_NAME}"
 echo "Creating isolated Pulumi execution environment in $WORKSPACE_DIR..."
 mkdir -p "$WORKSPACE_DIR"
 
@@ -38,8 +39,6 @@ if [ ! -f "$WORKSPACE_DIR/Pulumi.yaml" ]; then
     echo "Bootstrapping new Pulumi gcp-python project..."
     cd "$WORKSPACE_DIR"
     
-    # Configure headless local state so users aren't prompted for cloud SaaS logins
-    export PULUMI_CONFIG_PASSPHRASE=""
     pulumi login --local
     
     pulumi new gcp-python -y \

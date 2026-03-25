@@ -10,9 +10,13 @@ It transforms static configurations into a unified Infrastructure-as-Code pipeli
 - **Advanced AI Storage**: Maps GCS FUSE CSI drivers, Local NVMe SSD capacities, and GCFS (Image Streaming) uniformly across nodes to guarantee rapid model weights loading.
 
 ## Prerequisites
-1. [Pulumi CLI](https://www.pulumi.com/docs/install/) installed.
-2. [Google Cloud SDK (gcloud)](https://cloud.google.com/sdk/docs/install) authenticated with sufficient IAM privileges.
-3. Python 3.9+ installed natively.
+1. **Pulumi CLI**: Install Pulumi via the official script and add it to your local path:
+   ```bash
+   curl -fsSL https://get.pulumi.com | sh
+   export PATH=$PATH:~/.pulumi/bin
+   ```
+2. **Google Cloud SDK**: [Install gcloud](https://cloud.google.com/sdk/docs/install) and authenticate with sufficient IAM privileges.
+3. **Python 3.9+**: Installed natively on the deployment machine.
 
 ---
 
@@ -30,6 +34,7 @@ Ensure that your `cluster.conf` file is present in the directory and populated w
 You do not need to manually configure the Python environment or map the variables. Use the provided wrapper script to automate the entire lifecycle:
 
 ```bash
+cd pulumi
 chmod +x deploy_pulumi.sh
 ./deploy_pulumi.sh
 ```
@@ -52,6 +57,6 @@ export KUBECONFIG=kubeconfig.yaml
 To cleanly destroy the cluster and release the A3 Ultra reservations, you must execute Pulumi from inside the isolated workspace directory it created:
 
 ```bash
-cd .pulumi_cluster
+cd .pulumi_${DEPLOYMENT_NAME}
 pulumi destroy
 ```
