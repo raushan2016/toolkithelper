@@ -20,16 +20,29 @@ export NUM_GPUS=$((NUM_NODES * 8))
 
 echo "Configuring Mixtral-8x7B Training for $NUM_NODES nodes ($NUM_GPUS GPUs total)."
 
-echo "Setting default project..."
-gcloud config set project $PROJECT_ID
-
-echo "Getting cluster credentials..."
-# In GKE, region controls regional clusters or zone controls zonal. 
-gcloud container clusters get-credentials $DEPLOYMENT_NAME --zone $ZONE --project $PROJECT_ID || \
-gcloud container clusters get-credentials $DEPLOYMENT_NAME --region $REGION --project $PROJECT_ID
-
 # Extract mathematical Megatron constraint mappings dynamically
 export GLOBAL_BATCH_SIZE=$((16 * NUM_NODES))
+
+echo "Verifying GCS Prerequisites (HNS Enabled Regional Buckets)..."
+for BUCKET in "$GCS_TRAINING_BUCKET" "$GCS_CHECKPOINT_BUCKET"; do
+    if ! gcloud storage buckets describe "gs://${BUCKET}" --project="$PROJECT_ID" &>/dev/null; then
+        echo "Creating bucket gs://${BUCKET} with HNS enabled in region ${REGION}..."
+        gcloud storage buckets create "gs://${BUCKET}" \
+            --project="$PROJECT_ID" \
+            --location="$REGION" \
+            --enable-hierarchical-namespace
+    else
+        echo "Bucket gs://${BUCKET} already exists."
+    fi
+done
+
+echo "Ensuring dataset is present in training bucket..."
+if ! gcloud storage ls "gs://${GCS_TRAINING_BUCKET}/training-data/" &>/dev/null; then
+    echo "Initiating dataset transfer for Mixtral (this may take a few minutes)..."
+    gcloud storage cp -r "gs://nemo-megatron-demo/training-data/" "gs://${GCS_TRAINING_BUCKET}/"
+else
+    echo "Dataset already exists in gs://${GCS_TRAINING_BUCKET}."
+fi
 
 export USER_PREFIX=$(echo "$USER" | grep -v '\$' || echo "testuser")
 USER_SHORT=$(echo "$USER_PREFIX" | head -c 3)

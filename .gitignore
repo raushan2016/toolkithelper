@@ -6,3 +6,4 @@ cluster.conf.bak
 gcluster
 terraform
 *.zip
+LICENSE.txt

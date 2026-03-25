@@ -21,14 +21,6 @@ export NUM_GPUS=$((NUM_NODES * 8))
 
 echo "Configuring NCCL test for $NUM_NODES nodes ($NUM_GPUS GPUs total) using native JobSet."
 
-echo "Setting default project..."
-gcloud config set project $PROJECT_ID
-
-echo "Getting cluster credentials..."
-# In GKE, region controls regional clusters or zone controls zonal. 
-gcloud container clusters get-credentials $DEPLOYMENT_NAME --zone $ZONE --project $PROJECT_ID || \
-gcloud container clusters get-credentials $DEPLOYMENT_NAME --region $REGION --project $PROJECT_ID
-
 export USER_PREFIX=$(echo "$USER" | grep -v '\$' || echo "testuser")
 # Shorten prefix to respect 64-character FQDN Kubernetes limit
 USER_SHORT=$(echo "$USER_PREFIX" | head -c 3)

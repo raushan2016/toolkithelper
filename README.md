@@ -73,6 +73,11 @@ The easiest way to deploy this toolkit is by using Google Cloud Shell, which com
    ```
    Like the NCCL test, this will dynamically adapt to the node count specified in `cluster.conf`, provision GCS FUSE PVCs using your configured buckets, deploy a training workload using Kubernetes JobSet, and live-stream the resulting performance logs.
 
+   > [!IMPORTANT]
+   > **HNS Enabled Regional Buckets:** For the high-throughput Mixtral training job to execute successfully on the CSI mounts, the Google Cloud Storage buckets **must have Hierarchical Namespace (HNS) enabled**. Additionally, to prevent massive network latency bottlenecks and cross-region egress costs, the buckets must be provisioned in the **exact same GCP region** as the GKE cluster. 
+   > 
+   > **Background Dataset Transfer:** The `./run_mixtral_test.sh` script automatically provisions these buckets based on your `cluster.conf` variables and executes a massive `gcloud storage cp` bulk transfer of the 6.6 GiB Wikipedia Tokenized dataset from `gs://nemo-megatron-demo/training-data/` into your local training bucket for optimal localized read-speeds.
+
 6. **Teardown Environment**
    To completely wipe the deployed infrastructure and save costs when you're finished experimenting, run:
    ```bash
