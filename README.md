@@ -9,7 +9,13 @@ This folder contains everything needed to rapidly provision an AI-optimized GKE 
    gcloud auth application-default login
    ```
 2. **Quota / Reservations**: Make sure you have the required quota and compute reservations (e.g., H200) in your selected GCP project.
-
+3. **IAM Permissions**: The authenticated account running the deployment must have sufficient privileges in the target GCP Project. At a minimum, ensure you have the following roles:
+   - `Project IAM Admin` (to manage service accounts and bindings)
+   - `Kubernetes Engine Admin` (to provision the GKE cluster)
+   - `Compute Admin` (to configure VPC networks and node pools)
+   - `Storage Admin` (to create the Terraform state bucket)
+   - `Service Usage Admin` (to automatically enable required GCP APIs)
+   *(Alternatively, the `Owner` or `Editor` + `Project IAM Admin` roles will cover all of the above).*
 ## Instructions
 1. **Configure Parameters**: 
    Open `cluster.conf` using any text editor and update the variables tailored to your environment:

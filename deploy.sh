@@ -24,9 +24,9 @@ export RESERVATION_NAME
 export AUTHORIZED_CIDR
 export H200_NODE_COUNT
 
-# Ensure gcluster CLI is in PATH
-if ! command -v gcluster &> /dev/null; then
-    echo "gcluster could not be found. Automatically downloading and installing Cluster Toolkit (v1.83.0)..."
+# Ensure gcluster CLI is available in the current directory
+if [ ! -x "./gcluster" ] && ! command -v gcluster &> /dev/null; then
+    echo "gcluster could not be found. Automatically downloading and installing Cluster Toolkit (v1.83.0) to current directory..."
     TAG="v1.83.0"
     TMP_DIR=$(mktemp -d)
     echo "Downloading from GitHub Releases..."
@@ -35,22 +35,36 @@ if ! command -v gcluster &> /dev/null; then
     echo "Extracting bundle..."
     unzip -q "${TMP_DIR}/gcluster.zip" -d "${TMP_DIR}/gcluster-bundle"
     
-    # Ensure local bin directory exists
-    mkdir -p "$HOME/.local/bin"
-    mv "${TMP_DIR}/gcluster-bundle/gcluster" "$HOME/.local/bin/"
-    chmod +x "$HOME/.local/bin/gcluster"
+    mv "${TMP_DIR}/gcluster-bundle/gcluster" "./gcluster"
+    chmod +x "./gcluster"
     
     rm -rf "${TMP_DIR}"
     
-    # Update PATH for the current script execution
-    export PATH="$HOME/.local/bin:$PATH"
-    
-    if ! command -v gcluster &> /dev/null; then
-        echo "Error: Installation completed but gcluster is still not in your PATH."
+    if [ ! -x "./gcluster" ]; then
+        echo "Error: Installation completed but ./gcluster is still not accessible."
         exit 1
     fi
     echo "Successfully installed gcluster."
 fi
+
+# Use local binary if it was just downloaded, otherwise fallback to system path if available
+GCLUSTER_CMD="gcluster"
+if [ -x "./gcluster" ]; then
+    GCLUSTER_CMD="./gcluster"
+fi
+
+# Ensure correct Terraform version (1.12.2) is available locally for gcluster
+if [ ! -x "./terraform" ]; then
+    echo "Terraform not found locally. Downloading Terraform 1.12.2..."
+    curl -L -s "https://releases.hashicorp.com/terraform/1.12.2/terraform_1.12.2_linux_amd64.zip" -o "tf_tmp.zip"
+    unzip -qo "tf_tmp.zip" -d .
+    chmod +x ./terraform
+    rm "tf_tmp.zip"
+    echo "Successfully installed local terraform 1.12.2."
+fi
+
+# Prioritize local binaries (terraform) in the shell PATH before calling gcluster
+export PATH="$PWD:$PATH"
 
 # Use envsubst to replace variables in the template and generate the final yaml
 TEMPLATE_FILE="gke-h200.yaml.template"
@@ -88,7 +102,7 @@ else
 fi
 
 echo "Deploying the infrastructure using gcluster deploy..."
-gcluster deploy "$BLUEPRINT_FILE" --auto-approve -w
+$GCLUSTER_CMD deploy "$BLUEPRINT_FILE" --auto-approve -w
 
 echo "Deployment complete! You can retrieve kubeconfig with:"
 echo "gcloud container clusters get-credentials ${DEPLOYMENT_NAME} --zone ${ZONE} --project ${PROJECT_ID}"
