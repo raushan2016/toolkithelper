@@ -2,6 +2,17 @@
 
 This folder contains everything needed to rapidly provision an AI-optimized GKE Cluster on Google Cloud Platform, tailored for High-Performance Workloads (e.g., A3/H200).
 
+## Getting Started with Cloud Shell
+
+The easiest way to deploy this toolkit is by using Google Cloud Shell, which comes pre-installed with necessary tools (like `gcloud` and `git`).
+
+1. Open [Google Cloud Shell](https://shell.cloud.google.com/?pli=1&show=ide%2Cterminal).
+2. Clone this repository and navigate into the directory:
+   ```bash
+   git clone https://github.com/raushan2016/toolkithelper.git
+   cd toolkithelper
+   ```
+3. Use the provided scripts (e.g., `deploy.sh`, `run_nccl_test.sh`, `run_mixtral_test.sh`, `teardown.sh`) to achieve your specific goals as detailed in the instructions below.
 ## Prerequisites
 1. **Google Cloud SDK**: Make sure you have the `gcloud` CLI installed and authenticated to your GCP project.
    ```bash

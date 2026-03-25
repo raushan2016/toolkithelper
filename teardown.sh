@@ -12,7 +12,7 @@ if [ ! -f "cluster.conf" ]; then
 fi
 source cluster.conf
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PWD:$HOME/.local/bin:$PATH"
 
 if [ ! -d "$DEPLOYMENT_NAME" ]; then
     echo "Error: Deployment directory '$DEPLOYMENT_NAME' not found."

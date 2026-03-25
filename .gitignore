@@ -4,3 +4,5 @@
 gke-h200.yaml
 cluster.conf.bak
 gcluster
+terraform
+*.zip
