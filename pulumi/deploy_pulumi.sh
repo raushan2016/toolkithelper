@@ -61,6 +61,11 @@ cp __main__.py *.tftpl "$WORKSPACE_DIR/"
 # Execute Pulumi inside the workspace container
 cd "$WORKSPACE_DIR"
 source venv/bin/activate
+
+# Force Pulumi GCP provider to bypass the rate-limited Cloud Shell metadata service (which causes EOF panics)
+# by directly seeding its environment with a short-lived OAuth token generated from the pre-authenticated CLI.
+export GOOGLE_OAUTH_ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
+
 # Ensure a default stack is initialized for the local backend to prevent interactive prompts
 pulumi stack select dev 2>/dev/null || pulumi stack init dev
 

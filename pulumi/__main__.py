@@ -13,9 +13,6 @@ node_count = config.require_int("node_count")
 reservation_name = config.require("reservation_name")
 region = config.require("region")
 zone = config.require("zone")
-
-gke_version_prefix = "1.35"
-
 # Sizing CIDRs for massive scale (>2000 nodes possible per /12 secondary range)
 pod_cidr = "10.64.0.0/12"
 service_cidr = "10.96.0.0/20"
@@ -124,7 +121,6 @@ cluster = gcp.container.Cluster(
     location=zone,
     deletion_protection=False,
     enable_multi_networking=True,
-    min_master_version=gke_version_prefix,
     ip_allocation_policy={
         "cluster_secondary_range_name": f"{prefix}-pods",
         "services_secondary_range_name": f"{prefix}-services",
@@ -223,7 +219,6 @@ nodepool = gcp.container.NodePool(
     node_count=node_count,
     max_pods_per_node=110,
     network_config={"additional_node_network_configs": additional_node_network_configs},
-    version=gke_version_prefix,
 )
 
 cpu_nodepool = gcp.container.NodePool(
@@ -241,7 +236,6 @@ cpu_nodepool = gcp.container.NodePool(
     },
     initial_node_count=3,
     autoscaling={"min_node_count": 2, "max_node_count": 10},
-    version=gke_version_prefix,
 )
 
 # ==============================================================================
