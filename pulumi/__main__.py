@@ -118,7 +118,7 @@ cluster = gcp.container.Cluster(
     f"{prefix}-cluster",
     networking_mode="VPC_NATIVE",
     datapath_provider="ADVANCED_DATAPATH",
-    location=zone,
+    location=region,
     deletion_protection=False,
     enable_multi_networking=True,
     ip_allocation_policy={
@@ -325,29 +325,10 @@ rdma_k8s = k8s.yaml.ConfigGroup(
     opts=pulumi.ResourceOptions(provider=k8s_provider)
 )
 
-# JobSet Operator Install (~ Server-Side Apply)
-jobset_installer = k8s.yaml.ConfigFile(
-    "jobset-installer",
-    file="https://github.com/kubernetes-sigs/jobset/releases/download/v0.8.0/manifests.yaml",
-    opts=pulumi.ResourceOptions(provider=k8s_provider)
-)
-
-# Kueue Install
-kueue_installer = k8s.yaml.ConfigFile(
-    "kueue-installer",
-    file="https://github.com/kubernetes-sigs/kueue/releases/download/v0.10.1/manifests.yaml",
-    opts=pulumi.ResourceOptions(provider=k8s_provider)
-)
-
-# Dynamically parse and register our Cluster Kueue configuration template
+# Dynamically parse and write our Cluster Kueue configuration
 kueue_config_yaml = Path("kueue-configuration.yaml.tftpl").read_text()
 kueue_config_yaml = kueue_config_yaml.replace("${accelerator_type}", "nvidia-h200-141gb").replace("${num_gpus}", str(node_count * 8))
-
-kueue_config = k8s.yaml.ConfigGroup(
-    "kueue-flavor-config",
-    yaml=[kueue_config_yaml],
-    opts=pulumi.ResourceOptions(provider=k8s_provider, depends_on=[kueue_installer])
-)
+Path("kueue-configuration.yaml").write_text(kueue_config_yaml)
 
 # NCCL Toolkit Installer
 nccl_installer = k8s.yaml.ConfigFile(
@@ -357,4 +338,5 @@ nccl_installer = k8s.yaml.ConfigFile(
 )
 
 pulumi.export("cluster_id", cluster.id)
+pulumi.export("cluster_name", cluster.name)
 pulumi.export("kubeconfig", kubeconfig)

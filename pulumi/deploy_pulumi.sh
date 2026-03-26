@@ -83,13 +83,18 @@ pulumi config set gcp:zone "$ZONE"
 echo "Starting Pulumi IaC Deployment..."
 pulumi up --yes
 
-echo "Exporting core dependencies..."
-pulumi stack output kubeconfig > ../kubeconfig.yaml
+echo "Fetching GKE Credentials natively to ensure valid API tokens..."
+CLUSTER_NAME=$(pulumi stack output cluster_name)
+gcloud container clusters get-credentials "$CLUSTER_NAME" --region "$REGION" --project "$PROJECT_ID"
 
 echo "==========================================================="
-echo "Deployment successfully provisioned!"
+echo "Infrastructure Deployment successfully provisioned!"
+echo "Triggering Kubernetes Subsystem Setup..."
+echo "==========================================================="
+cd ..
+./install_k8s_components.sh
 echo ""
-echo "Credentials saved! Run: export KUBECONFIG=kubeconfig.yaml"
+echo "Credentials saved natively to your ~/.kube/config context!"
 echo "You can validate the cluster's multi-NIC RDMA network instantly by executing: ./run_nccl_test.sh"
 echo ""
 echo "NOTE: To cleanly teardown the cluster, simply run:"
