@@ -199,12 +199,6 @@ nodepool = gcp.container.NodePool(
         "disk_type": "hyperdisk-balanced",
         "disk_size_gb": 100,
         "shielded_instance_config": {"enable_secure_boot": True},
-        "linux_node_config": {
-            "sysctls": {
-                "net.ipv4.tcp_rmem": "4096 87380 16777216",
-                "net.ipv4.tcp_wmem": "4096 16384 16777216"
-            }
-        },
         "kubelet_config": {"cpu_cfs_quota": True},
         "gcfs_config": {"enabled": True}, # IMAGE STREAMING Enabled for AI Boot Time
         "taints" : [
@@ -322,7 +316,7 @@ spec:
 rdma_k8s = k8s.yaml.ConfigGroup(
     "rdma-networks-manifests",
     yaml=["---".join(gvnic_rdma_networks)],
-    opts=pulumi.ResourceOptions(provider=k8s_provider)
+    opts=pulumi.ResourceOptions(provider=k8s_provider, retain_on_delete=True)
 )
 
 # Dynamically parse and write our Cluster Kueue configuration
@@ -334,7 +328,7 @@ Path("kueue-configuration.yaml").write_text(kueue_config_yaml)
 nccl_installer = k8s.yaml.ConfigFile(
     "nccl-installer",
     file="https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/refs/heads/master/gpudirect-rdma/nccl-rdma-installer.yaml",
-    opts=pulumi.ResourceOptions(provider=k8s_provider)
+    opts=pulumi.ResourceOptions(provider=k8s_provider, retain_on_delete=True)
 )
 
 pulumi.export("cluster_id", cluster.id)

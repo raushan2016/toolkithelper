@@ -189,7 +189,7 @@ spec:
                       --mca btl_tcp_if_include eth0 \
                       --bind-to none \
                       --mca plm_rsh_agent "ssh -q -o LogLevel=ERROR -o StrictHostKeyChecking=no -p 222" \
-                      /third_party/nccl-tests/build/all_gather_perf -b 1K -e 8G -f 2 -g 1 -w 5 --iters 100 -c 1
+                      /third_party/nccl-tests/build/alltoall_perf -b 1K -e 8G -f 2 -g 1 -w 5 --iters 100 -c 1
 
                 else
                     while ping -c 1 ${WORKERS_BASENAME}-0.${POSTFIX}; do
