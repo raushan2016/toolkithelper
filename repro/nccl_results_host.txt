@@ -1,0 +1,1533 @@
++ mkdir -p /root/.ssh
++ cp /etc/secret-volume/id_rsa /root/.ssh/id_rsa
++ cp /etc/secret-volume/authorized_keys /root/.ssh/authorized_keys
++ chmod 700 /root/.ssh
++ chmod 600 /root/.ssh/id_rsa /root/.ssh/authorized_keys
++ printf 'Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile /dev/null\n'
++ echo 'PermitRootLogin yes'
++ echo 'PubkeyAuthentication yes'
++ mkdir -p /var/run/sshd
++ ssh -4 -o ConnectTimeout=2 -o LogLevel=QUIET 127.0.0.1 exit
++ /usr/sbin/sshd -D
++ sleep 1
++ ssh -4 -o ConnectTimeout=2 -o LogLevel=QUIET 127.0.0.1 exit
++ export DEBIAN_FRONTEND=noninteractive
++ DEBIAN_FRONTEND=noninteractive
++ apt update -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+Hit:3 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  InRelease
+Get:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+Get:5 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Get:6 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [4221 kB]
+Get:7 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1622 kB]
+Get:8 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [3889 kB]
+Get:9 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1311 kB]
+Get:10 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [6917 kB]
+Fetched 18.3 MB in 2s (9951 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+115 packages can be upgraded. Run 'apt list --upgradable' to see them.
++ apt install -y iputils-ping dnsutils
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  bind9-dnsutils bind9-host bind9-libs libcap2-bin libjson-c5 liblmdb0
+  libmaxminddb0 libpam-cap libuv1
+Suggested packages:
+  mmdb-bin
+The following NEW packages will be installed:
+  bind9-dnsutils bind9-host bind9-libs dnsutils iputils-ping libcap2-bin
+  libjson-c5 liblmdb0 libmaxminddb0 libpam-cap libuv1
+0 upgraded, 11 newly installed, 0 to remove and 115 not upgraded.
+Need to get 1752 kB of archives.
+After this operation, 5209 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libcap2-bin amd64 1:2.44-1ubuntu0.22.04.2 [26.0 kB]
+Get:2 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 iputils-ping amd64 3:20211215-1ubuntu0.1 [43.0 kB]
+Get:3 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libjson-c5 amd64 0.15-3~ubuntu1.22.04.2 [33.5 kB]
+Get:4 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpam-cap amd64 1:2.44-1ubuntu0.22.04.2 [7930 B]
+Get:5 http://archive.ubuntu.com/ubuntu jammy/main amd64 liblmdb0 amd64 0.9.24-1build2 [47.6 kB]
+Get:6 http://archive.ubuntu.com/ubuntu jammy/main amd64 libmaxminddb0 amd64 1.5.2-1build2 [24.7 kB]
+Get:7 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libuv1 amd64 1.43.0-1ubuntu0.1 [92.7 kB]
+Get:8 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 bind9-libs amd64 1:9.18.39-0ubuntu0.22.04.3 [1262 kB]
+Get:9 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 bind9-host amd64 1:9.18.39-0ubuntu0.22.04.3 [52.5 kB]
+Get:10 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 bind9-dnsutils amd64 1:9.18.39-0ubuntu0.22.04.3 [158 kB]
+Get:11 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 dnsutils all 1:9.18.39-0ubuntu0.22.04.3 [3924 B]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 1752 kB in 0s (14.1 MB/s)
+Selecting previously unselected package libcap2-bin.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 16447 files and directories currently installed.)
+Preparing to unpack .../00-libcap2-bin_1%3a2.44-1ubuntu0.22.04.2_amd64.deb ...
+Unpacking libcap2-bin (1:2.44-1ubuntu0.22.04.2) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../01-iputils-ping_3%3a20211215-1ubuntu0.1_amd64.deb ...
+Unpacking iputils-ping (3:20211215-1ubuntu0.1) ...
+Selecting previously unselected package libjson-c5:amd64.
+Preparing to unpack .../02-libjson-c5_0.15-3~ubuntu1.22.04.2_amd64.deb ...
+Unpacking libjson-c5:amd64 (0.15-3~ubuntu1.22.04.2) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../03-libpam-cap_1%3a2.44-1ubuntu0.22.04.2_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.44-1ubuntu0.22.04.2) ...
+Selecting previously unselected package liblmdb0:amd64.
+Preparing to unpack .../04-liblmdb0_0.9.24-1build2_amd64.deb ...
+Unpacking liblmdb0:amd64 (0.9.24-1build2) ...
+Selecting previously unselected package libmaxminddb0:amd64.
+Preparing to unpack .../05-libmaxminddb0_1.5.2-1build2_amd64.deb ...
+Unpacking libmaxminddb0:amd64 (1.5.2-1build2) ...
+Selecting previously unselected package libuv1:amd64.
+Preparing to unpack .../06-libuv1_1.43.0-1ubuntu0.1_amd64.deb ...
+Unpacking libuv1:amd64 (1.43.0-1ubuntu0.1) ...
+Selecting previously unselected package bind9-libs:amd64.
+Preparing to unpack .../07-bind9-libs_1%3a9.18.39-0ubuntu0.22.04.3_amd64.deb ...
+Unpacking bind9-libs:amd64 (1:9.18.39-0ubuntu0.22.04.3) ...
+Selecting previously unselected package bind9-host.
+Preparing to unpack .../08-bind9-host_1%3a9.18.39-0ubuntu0.22.04.3_amd64.deb ...
+Unpacking bind9-host (1:9.18.39-0ubuntu0.22.04.3) ...
+Selecting previously unselected package bind9-dnsutils.
+Preparing to unpack .../09-bind9-dnsutils_1%3a9.18.39-0ubuntu0.22.04.3_amd64.deb ...
+Unpacking bind9-dnsutils (1:9.18.39-0ubuntu0.22.04.3) ...
+Selecting previously unselected package dnsutils.
+Preparing to unpack .../10-dnsutils_1%3a9.18.39-0ubuntu0.22.04.3_all.deb ...
+Unpacking dnsutils (1:9.18.39-0ubuntu0.22.04.3) ...
+Setting up liblmdb0:amd64 (0.9.24-1build2) ...
+Setting up libmaxminddb0:amd64 (1.5.2-1build2) ...
+Setting up libcap2-bin (1:2.44-1ubuntu0.22.04.2) ...
+Setting up libuv1:amd64 (1.43.0-1ubuntu0.1) ...
+Setting up libpam-cap:amd64 (1:2.44-1ubuntu0.22.04.2) ...
+Setting up iputils-ping (3:20211215-1ubuntu0.1) ...
+Setting up libjson-c5:amd64 (0.15-3~ubuntu1.22.04.2) ...
+Setting up bind9-libs:amd64 (1:9.18.39-0ubuntu0.22.04.3) ...
+Setting up bind9-host (1:9.18.39-0ubuntu0.22.04.3) ...
+Setting up bind9-dnsutils (1:9.18.39-0ubuntu0.22.04.3) ...
+Setting up dnsutils (1:9.18.39-0ubuntu0.22.04.3) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.10) ...
++ echo '=== Debug Info ==='
++ echo 'LD_LIBRARY_PATH: /usr/local/nvidia/lib:/usr/local/nvidia/lib64'
+=== Debug Info ===
+LD_LIBRARY_PATH: /usr/local/nvidia/lib:/usr/local/nvidia/lib64
++ grep cuda
++ ldconfig -p
+	libpcsamplingutil.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libpcsamplingutil.so
+	libnvtx3interop.so.1 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvtx3interop.so.1
+	libnvtx3interop.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvtx3interop.so
+	libnvrtc.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvrtc.so.13
+	libnvrtc.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvrtc.so
+	libnvrtc.alt.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvrtc.alt.so.13
+	libnvrtc.alt.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvrtc.alt.so
+	libnvrtc-builtins.so.13.0 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.so.13.0
+	libnvrtc-builtins.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.so
+	libnvrtc-builtins.alt.so.13.0 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.alt.so.13.0
+	libnvrtc-builtins.alt.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.alt.so
+	libnvperf_target.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvperf_target.so
+	libnvperf_host.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvperf_host.so
+	libnvjpeg.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvjpeg.so.13
+	libnvjpeg.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvjpeg.so
+	libnvfatbin.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvfatbin.so.13
+	libnvfatbin.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvfatbin.so
+	libnvblas.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvblas.so.13
+	libnvblas.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvblas.so
+	libnvJitLink.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvJitLink.so.13
+	libnvJitLink.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnvJitLink.so
+	libnpps.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnpps.so.13
+	libnpps.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnpps.so
+	libnppitc.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppitc.so.13
+	libnppitc.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppitc.so
+	libnppisu.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppisu.so.13
+	libnppisu.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppisu.so
+	libnppist.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppist.so.13
+	libnppist.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppist.so
+	libnppim.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppim.so.13
+	libnppim.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppim.so
+	libnppig.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppig.so.13
+	libnppig.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppig.so
+	libnppif.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppif.so.13
+	libnppif.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppif.so
+	libnppidei.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppidei.so.13
+	libnppidei.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppidei.so
+	libnppicc.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppicc.so.13
+	libnppicc.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppicc.so
+	libnppial.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppial.so.13
+	libnppial.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppial.so
+	libnppc.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppc.so.13
+	libnppc.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libnppc.so
+	libicudata.so.70 (libc6,x86-64) => /lib/x86_64-linux-gnu/libicudata.so.70
+	libcusparse.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcusparse.so.12
+	libcusparse.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcusparse.so
+	libcusolverMg.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcusolverMg.so.12
+	libcusolverMg.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcusolverMg.so
+	libcusolver.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcusolver.so.12
+	libcusolver.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcusolver.so
+	libcurand.so.10 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcurand.so.10
+	libcurand.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcurand.so
+	libcupti.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcupti.so.13
+	libcupti.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcupti.so
+	libcufile_rdma.so.1 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcufile_rdma.so.1
+	libcufile_rdma.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcufile_rdma.so
+	libcufile.so.0 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcufile.so.0
+	libcufile.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcufile.so
+	libcufftw.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcufftw.so.12
+	libcufftw.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcufftw.so
+	libcufft.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcufft.so.12
+	libcufft.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcufft.so
+	libcudart.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcudart.so.13
+	libcudart.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcudart.so
+	libcublasLt.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so.13
+	libcublasLt.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so
+	libcublas.so.13 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so.13
+	libcublas.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so
+	libcheckpoint.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcheckpoint.so
+	libOpenCL.so.1 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libOpenCL.so.1
++ find /usr -name 'libcudart.so*'
++ nslookup nccl-host
+/usr/local/cuda-13.0/targets/x86_64-linux/lib/libcudart.so.13.0.48
+/usr/local/cuda-13.0/targets/x86_64-linux/lib/libcudart.so.13
+/usr/local/cuda-13.0/targets/x86_64-linux/lib/libcudart.so
+Server:		10.96.0.10
+Address:	10.96.0.10#53
+
+Name:	nccl-host.default.svc.cluster.local
+Address: 10.64.0.21
+Name:	nccl-host.default.svc.cluster.local
+Address: 10.64.3.23
+;; Got recursion not available from 10.96.0.10
+
++ PREFIX=nccl-pytorch-host-nccl-0
+++ hostname -d
++ DOMAIN=nccl-host.default.svc.cluster.local
++ [[ -z nccl-host.default.svc.cluster.local ]]
++ [[ 0 -ne 0 ]]
++ HOSTFILE=/tmp/hostfile
++ rm -f /tmp/hostfile
++ (( i=0 ))
++ (( i<2 ))
++ TARGET=nccl-pytorch-host-nccl-0-0.nccl-host.default.svc.cluster.local
++ (( r=0 ))
++ (( r<150 ))
+++ getent hosts nccl-pytorch-host-nccl-0-0.nccl-host.default.svc.cluster.local
+++ awk '{print $1}'
+++ head -n 1
++ IP=10.64.3.23
++ [[ -n 10.64.3.23 ]]
++ break
++ [[ -z 10.64.3.23 ]]
++ echo '10.64.3.23 slots=8'
++ ssh -o ConnectTimeout=2 10.64.3.23 echo ready
+Warning: Permanently added '10.64.3.23' (ED25519) to the list of known hosts.
+ready
++ (( i++ ))
++ (( i<2 ))
++ TARGET=nccl-pytorch-host-nccl-0-1.nccl-host.default.svc.cluster.local
++ (( r=0 ))
++ (( r<150 ))
+++ getent hosts nccl-pytorch-host-nccl-0-1.nccl-host.default.svc.cluster.local
+++ awk '{print $1}'
+++ head -n 1
++ IP=10.64.0.21
++ [[ -n 10.64.0.21 ]]
++ break
++ [[ -z 10.64.0.21 ]]
++ echo '10.64.0.21 slots=8'
++ ssh -o ConnectTimeout=2 10.64.0.21 echo ready
+Warning: Permanently added '10.64.0.21' (ED25519) to the list of known hosts.
+ready
++ (( i++ ))
++ (( i<2 ))
++ echo 'All workers ready. Starting MPI...'
++ export NCCL_SOCKET_IFNAME=eth0
+All workers ready. Starting MPI...
++ NCCL_SOCKET_IFNAME=eth0
++ export NCCL_DEBUG=INFO
++ NCCL_DEBUG=INFO
++ export NCCL_TUNER_PLUGIN=none
++ NCCL_TUNER_PLUGIN=none
++ export NCCL_NET=gIB
++ NCCL_NET=gIB
++ '[' -f /usr/local/gib/scripts/set_nccl_env.sh ']'
++ source /usr/local/gib/scripts/set_nccl_env.sh
+++ export NCCL_CONF_FILE=/usr/local/gib/scripts/nccl.conf
+++ NCCL_CONF_FILE=/usr/local/gib/scripts/nccl.conf
+++ echo NCCL_CONF_FILE NCCL_DEBUG NCCL_NET NCCL_SOCKET_IFNAME NCCL_TUNER_PLUGIN NCCL_VERSION LD_LIBRARY_PATH PATH
+++ sed 's/ / -x /g'
++ ENV_VARS='NCCL_CONF_FILE -x NCCL_DEBUG -x NCCL_NET -x NCCL_SOCKET_IFNAME -x NCCL_TUNER_PLUGIN -x NCCL_VERSION -x LD_LIBRARY_PATH -x PATH'
++ mpirun --allow-run-as-root -np 16 -hostfile /tmp/hostfile -mca btl_tcp_if_include eth0 -mca oob_tcp_if_include eth0 -mca pml ob1 -mca btl '^openib' --bind-to none -map-by slot -x NCCL_CONF_FILE -x NCCL_DEBUG -x NCCL_NET -x NCCL_SOCKET_IFNAME -x NCCL_TUNER_PLUGIN -x NCCL_VERSION -x LD_LIBRARY_PATH -x PATH /usr/local/bin/alltoall_perf -b 1K -e 8G -f 2 -g 1 -w 5 --iters 100 -c 1
+Warning: Permanently added '10.64.0.21' (ED25519) to the list of known hosts.
+# nccl-tests version 2.18.2 nccl-headers=22707 nccl-library=22809
+# Collective test starting: alltoall_perf
+# nThread 1 nGpus 1 minBytes 1024 maxBytes 8589934592 step: 2(factor) warmup iters: 5 iters: 100 agg iters: 1 validation: 1 graph: 0 unalign: 0
+#
+# Using devices
+#  Rank  0 Group  0 Pid    445 on nccl-pytorch-host-nccl-0-0 device  0 [0000:8f:00] NVIDIA H200
+#  Rank  1 Group  0 Pid    446 on nccl-pytorch-host-nccl-0-0 device  1 [0000:90:00] NVIDIA H200
+#  Rank  2 Group  0 Pid    447 on nccl-pytorch-host-nccl-0-0 device  2 [0000:96:00] NVIDIA H200
+#  Rank  3 Group  0 Pid    448 on nccl-pytorch-host-nccl-0-0 device  3 [0000:97:00] NVIDIA H200
+#  Rank  4 Group  0 Pid    449 on nccl-pytorch-host-nccl-0-0 device  4 [0000:c4:00] NVIDIA H200
+#  Rank  5 Group  0 Pid    451 on nccl-pytorch-host-nccl-0-0 device  5 [0000:c5:00] NVIDIA H200
+#  Rank  6 Group  0 Pid    453 on nccl-pytorch-host-nccl-0-0 device  6 [0000:cb:00] NVIDIA H200
+#  Rank  7 Group  0 Pid    455 on nccl-pytorch-host-nccl-0-0 device  7 [0000:cc:00] NVIDIA H200
+#  Rank  8 Group  0 Pid    441 on nccl-pytorch-host-nccl-0-1 device  0 [0000:8f:00] NVIDIA H200
+#  Rank  9 Group  0 Pid    442 on nccl-pytorch-host-nccl-0-1 device  1 [0000:90:00] NVIDIA H200
+#  Rank 10 Group  0 Pid    443 on nccl-pytorch-host-nccl-0-1 device  2 [0000:96:00] NVIDIA H200
+#  Rank 11 Group  0 Pid    444 on nccl-pytorch-host-nccl-0-1 device  3 [0000:97:00] NVIDIA H200
+#  Rank 12 Group  0 Pid    445 on nccl-pytorch-host-nccl-0-1 device  4 [0000:c4:00] NVIDIA H200
+#  Rank 13 Group  0 Pid    447 on nccl-pytorch-host-nccl-0-1 device  5 [0000:c5:00] NVIDIA H200
+#  Rank 14 Group  0 Pid    449 on nccl-pytorch-host-nccl-0-1 device  6 [0000:cb:00] NVIDIA H200
+#  Rank 15 Group  0 Pid    450 on nccl-pytorch-host-nccl-0-1 device  7 [0000:cc:00] NVIDIA H200
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Bootstrap: Using eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Bootstrap: Using eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Bootstrap: Using eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Bootstrap: Using eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Bootstrap: Using eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Bootstrap: Using eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Bootstrap: Using eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Bootstrap: Using eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Bootstrap: Using eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Bootstrap: Using eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Bootstrap: Using eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Bootstrap: Using eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Bootstrap: Using eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Bootstrap: Using eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Bootstrap: Using eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO cudaDriverVersion 13000
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Bootstrap: Using eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL version 2.28.9+cuda13.0
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL_NCHANNELS_PER_NET_PEER set by environment to 1.
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NET/Plugin: Loaded net plugin gIB (v11)
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Successfully loaded external network plugin /usr/local/nvidia/lib64/libnccl-net.so
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NET/gIB : Initializing gIB v1.1.1
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL_SOCKET_IFNAME set by environment to eth0
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL_IB_MERGE_VFS set by environment to 1.
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL_IB_ADAPTIVE_ROUTING set by environment to 1.
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.3.23<0>
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NET/gIB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [4]mlx5_4:1/RoCE [5]mlx5_5:1/RoCE [6]mlx5_6:1/RoCE [7]mlx5_7:1/RoCE [RO]; OOB eth0:10.64.0.21<0>
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Initialized NET plugin gIB
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Assigned NET plugin gIB to comm
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Using network gIB
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO DMA-BUF is available on GPU device 0
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO ncclCommInitRankConfig comm 0x562b3f56e5b0 rank 0 nranks 16 cudaDev 0 nvmlDev 0 busId 8f000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO DMA-BUF is available on GPU device 4
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO ncclCommInitRankConfig comm 0x5b2382b73540 rank 12 nranks 16 cudaDev 4 nvmlDev 4 busId c4000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO DMA-BUF is available on GPU device 2
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO ncclCommInitRankConfig comm 0x5b606386bbe0 rank 2 nranks 16 cudaDev 2 nvmlDev 2 busId 96000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO DMA-BUF is available on GPU device 7
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO ncclCommInitRankConfig comm 0x57f1f6f348f0 rank 7 nranks 16 cudaDev 7 nvmlDev 7 busId cc000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO DMA-BUF is available on GPU device 5
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO ncclCommInitRankConfig comm 0x59f838c5b7b0 rank 5 nranks 16 cudaDev 5 nvmlDev 5 busId c5000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO DMA-BUF is available on GPU device 6
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO ncclCommInitRankConfig comm 0x5bf9248ee6f0 rank 6 nranks 16 cudaDev 6 nvmlDev 6 busId cb000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO DMA-BUF is available on GPU device 3
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO ncclCommInitRankConfig comm 0x59fd345839b0 rank 3 nranks 16 cudaDev 3 nvmlDev 3 busId 97000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO DMA-BUF is available on GPU device 1
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO ncclCommInitRankConfig comm 0x58e7d5e4bb50 rank 1 nranks 16 cudaDev 1 nvmlDev 1 busId 90000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO DMA-BUF is available on GPU device 4
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO ncclCommInitRankConfig comm 0x5a6357116e00 rank 4 nranks 16 cudaDev 4 nvmlDev 4 busId c4000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO DMA-BUF is available on GPU device 1
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO ncclCommInitRankConfig comm 0x5c57494dc310 rank 9 nranks 16 cudaDev 1 nvmlDev 1 busId 90000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO DMA-BUF is available on GPU device 2
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO ncclCommInitRankConfig comm 0x588fa2b8d910 rank 10 nranks 16 cudaDev 2 nvmlDev 2 busId 96000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO DMA-BUF is available on GPU device 3
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO ncclCommInitRankConfig comm 0x5bf658212850 rank 11 nranks 16 cudaDev 3 nvmlDev 3 busId 97000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO DMA-BUF is available on GPU device 0
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO ncclCommInitRankConfig comm 0x58e1265518a0 rank 8 nranks 16 cudaDev 0 nvmlDev 0 busId 8f000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO DMA-BUF is available on GPU device 7
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO ncclCommInitRankConfig comm 0x5565cbba8870 rank 15 nranks 16 cudaDev 7 nvmlDev 7 busId cc000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO DMA-BUF is available on GPU device 6
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO ncclCommInitRankConfig comm 0x57495f1e59b0 rank 14 nranks 16 cudaDev 6 nvmlDev 6 busId cb000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO DMA-BUF is available on GPU device 5
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO ncclCommInitRankConfig comm 0x566029351910 rank 13 nranks 16 cudaDev 5 nvmlDev 5 busId c5000 commId 0x9d388e2c694b93c9 - Init START
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Bootstrap timings total 0.033219 (create 0.000026, send 0.000072, recv 0.002419, ring 0.019466, delay 0.000000)
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Bootstrap timings total 0.030884 (create 0.000025, send 0.000069, recv 0.000094, ring 0.030402, delay 0.000000)
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Bootstrap timings total 0.037717 (create 0.000025, send 0.000074, recv 0.033427, ring 0.003591, delay 0.000000)
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Bootstrap timings total 0.019937 (create 0.000026, send 0.000073, recv 0.000063, ring 0.019536, delay 0.000000)
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Bootstrap timings total 0.005237 (create 0.000027, send 0.000244, recv 0.000816, ring 0.003887, delay 0.000000)
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Bootstrap timings total 0.022027 (create 0.000026, send 0.000075, recv 0.002101, ring 0.019561, delay 0.000000)
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Bootstrap timings total 0.090854 (create 0.000033, send 0.000411, recv 0.089624, ring 0.000498, delay 0.000000)
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Bootstrap timings total 0.001623 (create 0.000031, send 0.000172, recv 0.000340, ring 0.000497, delay 0.000000)
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Bootstrap timings total 0.052329 (create 0.000027, send 0.000063, recv 0.030297, ring 0.020099, delay 0.000001)
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Bootstrap timings total 0.020572 (create 0.000026, send 0.000085, recv 0.000070, ring 0.020123, delay 0.000000)
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Bootstrap timings total 0.006946 (create 0.000026, send 0.000229, recv 0.002172, ring 0.004192, delay 0.000000)
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Bootstrap timings total 0.135811 (create 0.000027, send 0.000061, recv 0.115299, ring 0.002457, delay 0.000000)
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Bootstrap timings total 0.007424 (create 0.000026, send 0.000361, recv 0.000615, ring 0.003700, delay 0.000001)
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Bootstrap timings total 0.004798 (create 0.000024, send 0.000194, recv 0.000602, ring 0.003626, delay 0.000000)
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Bootstrap timings total 0.003765 (create 0.000025, send 0.000166, recv 0.000210, ring 0.000868, delay 0.000001)
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Bootstrap timings total 0.004285 (create 0.000026, send 0.000178, recv 0.000462, ring 0.003082, delay 0.000000)
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO MNNVL busId 0xcc000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO MNNVL busId 0xc5000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO MNNVL busId 0xc4000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO MNNVL busId 0xcb000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO MNNVL busId 0x97000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO MNNVL busId 0x97000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO MNNVL busId 0xc5000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO MNNVL busId 0xc4000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO MNNVL busId 0xcc000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO MNNVL busId 0x96000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO MNNVL busId 0x90000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO MNNVL busId 0x8f000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO MNNVL busId 0x96000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO MNNVL busId 0xcb000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO MNNVL busId 0x8f000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO MNNVL busId 0x90000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 4 is 56-111,168-223. (GPU affinity = 56-111,168-223 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 5 is 56-111,168-223. (GPU affinity = 56-111,168-223 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS multicast support is available on dev 4 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 6 is 56-111,168-223. (GPU affinity = 56-111,168-223 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS multicast support is available on dev 5 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS multicast support is available on dev 6 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 3 is 0-55,112-167. (GPU affinity = 0-55,112-167 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS multicast support is available on dev 3 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-55,112-167. (GPU affinity = 0-55,112-167 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 7 is 56-111,168-223. (GPU affinity = 56-111,168-223 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS multicast support is available on dev 0 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 2 is 0-55,112-167. (GPU affinity = 0-55,112-167 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS multicast support is available on dev 2 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS multicast support is available on dev 7 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 1 is 0-55,112-167. (GPU affinity = 0-55,112-167 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS multicast support is available on dev 1 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 1 is 0-55,112-167. (GPU affinity = 0-55,112-167 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NVLS multicast support is available on dev 1 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 2 is 0-55,112-167. (GPU affinity = 0-55,112-167 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NVLS multicast support is available on dev 2 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 3 is 0-55,112-167. (GPU affinity = 0-55,112-167 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NVLS multicast support is available on dev 3 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL_PXN_C2C set by environment to 1.
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-55,112-167. (GPU affinity = 0-55,112-167 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 7 is 56-111,168-223. (GPU affinity = 56-111,168-223 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NVLS multicast support is available on dev 7 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NVLS multicast support is available on dev 0 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 5 is 56-111,168-223. (GPU affinity = 56-111,168-223 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NVLS multicast support is available on dev 5 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 4 is 56-111,168-223. (GPU affinity = 56-111,168-223 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NVLS multicast support is available on dev 4 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 6 is 56-111,168-223. (GPU affinity = 56-111,168-223 ; CPU affinity = 0-223).
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NVLS multicast support is available on dev 6 (NVLS_NCHANNELS 16)
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO comm 0x5a6357116e00 rank 4 nRanks 16 nNodes 2 localRanks 8 localRank 4 MNNVL 0
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS Head  0:  0  8
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS Head  1:  1  9
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS Head  2:  2 10
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS Head  3:  3 11
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS Head  4:  4 12
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS Head  5:  5 13
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS Head  6:  6 14
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NVLS Head  7:  7 15
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Trees [0] 5/-1/-1->4->3 [1] 3/-1/-1->4->5 [2] 5/-1/-1->4->3 [3] -1/-1/-1->4->5 [4] 5/12/-1->4->-1 [5] 3/-1/-1->4->5 [6] 5/-1/-1->4->3 [7] 3/-1/-1->4->5 [8] 5/-1/-1->4->3 [9] 3/-1/-1->4->5 [10] 5/-1/-1->4->3 [11] -1/-1/-1->4->5 [12] 5/-1/-1->4->12 [13] 3/-1/-1->4->5 [14] 5/-1/-1->4->3 [15] 3/-1/-1->4->5
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO comm 0x59f838c5b7b0 rank 5 nRanks 16 nNodes 2 localRanks 8 localRank 5 MNNVL 0
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS Head  0:  0  8
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS Head  1:  1  9
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS Head  2:  2 10
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS Head  3:  3 11
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS Head  4:  4 12
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS Head  5:  5 13
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS Head  6:  6 14
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NVLS Head  7:  7 15
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Trees [0] 6/-1/-1->5->4 [1] 4/-1/-1->5->6 [2] 6/-1/-1->5->4 [3] 4/-1/-1->5->6 [4] 6/-1/-1->5->4 [5] 4/13/-1->5->-1 [6] -1/-1/-1->5->4 [7] 4/-1/-1->5->6 [8] 6/-1/-1->5->4 [9] 4/-1/-1->5->6 [10] 6/-1/-1->5->4 [11] 4/-1/-1->5->6 [12] 6/-1/-1->5->4 [13] 4/-1/-1->5->13 [14] -1/-1/-1->5->4 [15] 4/-1/-1->5->6
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO comm 0x59fd345839b0 rank 3 nRanks 16 nNodes 2 localRanks 8 localRank 3 MNNVL 0
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS Head  0:  0  8
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS Head  1:  1  9
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS Head  2:  2 10
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS Head  3:  3 11
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS Head  4:  4 12
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS Head  5:  5 13
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS Head  6:  6 14
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NVLS Head  7:  7 15
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Trees [0] 4/-1/-1->3->2 [1] 2/-1/-1->3->4 [2] 4/-1/-1->3->2 [3] 2/11/-1->3->-1 [4] -1/-1/-1->3->2 [5] 2/-1/-1->3->4 [6] 4/-1/-1->3->2 [7] 2/-1/-1->3->4 [8] 4/-1/-1->3->2 [9] 2/-1/-1->3->4 [10] 4/-1/-1->3->2 [11] 2/-1/-1->3->11 [12] -1/-1/-1->3->2 [13] 2/-1/-1->3->4 [14] 4/-1/-1->3->2 [15] 2/-1/-1->3->4
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO comm 0x5bf9248ee6f0 rank 6 nRanks 16 nNodes 2 localRanks 8 localRank 6 MNNVL 0
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS Head  0:  0  8
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS Head  1:  1  9
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS Head  2:  2 10
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS Head  3:  3 11
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS Head  4:  4 12
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS Head  5:  5 13
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS Head  6:  6 14
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NVLS Head  7:  7 15
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Trees [0] 7/-1/-1->6->5 [1] 5/-1/-1->6->7 [2] 7/-1/-1->6->5 [3] 5/-1/-1->6->7 [4] 7/-1/-1->6->5 [5] -1/-1/-1->6->7 [6] 7/14/-1->6->-1 [7] 5/-1/-1->6->7 [8] 7/-1/-1->6->5 [9] 5/-1/-1->6->7 [10] 7/-1/-1->6->5 [11] 5/-1/-1->6->7 [12] 7/-1/-1->6->5 [13] -1/-1/-1->6->7 [14] 7/-1/-1->6->14 [15] 5/-1/-1->6->7
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO comm 0x57f1f6f348f0 rank 7 nRanks 16 nNodes 2 localRanks 8 localRank 7 MNNVL 0
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS Head  0:  0  8
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS Head  1:  1  9
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS Head  2:  2 10
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS Head  3:  3 11
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS Head  4:  4 12
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS Head  5:  5 13
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS Head  6:  6 14
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NVLS Head  7:  7 15
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Trees [0] -1/-1/-1->7->6 [1] 6/-1/-1->7->0 [2] 0/-1/-1->7->6 [3] 6/-1/-1->7->0 [4] 0/-1/-1->7->6 [5] 6/-1/-1->7->0 [6] 0/-1/-1->7->6 [7] 6/15/-1->7->-1 [8] -1/-1/-1->7->6 [9] 6/-1/-1->7->0 [10] 0/-1/-1->7->6 [11] 6/-1/-1->7->0 [12] 0/-1/-1->7->6 [13] 6/-1/-1->7->0 [14] 0/-1/-1->7->6 [15] 6/-1/-1->7->15
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO comm 0x562b3f56e5b0 rank 0 nRanks 16 nNodes 2 localRanks 8 localRank 0 MNNVL 0
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS Head  0:  0  8
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS Head  1:  1  9
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS Head  2:  2 10
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS Head  3:  3 11
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS Head  4:  4 12
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO comm 0x58e7d5e4bb50 rank 1 nRanks 16 nNodes 2 localRanks 8 localRank 1 MNNVL 0
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS Head  0:  0  8
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS Head  1:  1  9
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS Head  2:  2 10
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS Head  3:  3 11
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS Head  4:  4 12
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS Head  5:  5 13
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS Head  6:  6 14
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NVLS Head  7:  7 15
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO comm 0x5b606386bbe0 rank 2 nRanks 16 nNodes 2 localRanks 8 localRank 2 MNNVL 0
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS Head  0:  0  8
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS Head  1:  1  9
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS Head  2:  2 10
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS Head  3:  3 11
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS Head  4:  4 12
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS Head  5:  5 13
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS Head  6:  6 14
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NVLS Head  7:  7 15
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO comm 0x5c57494dc310 rank 9 nRanks 16 nNodes 2 localRanks 8 localRank 1 MNNVL 0
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Trees [0] 3/-1/-1->2->1 [1] -1/-1/-1->2->3 [2] 3/10/-1->2->-1 [3] 1/-1/-1->2->3 [4] 3/-1/-1->2->1 [5] 1/-1/-1->2->3 [6] 3/-1/-1->2->1 [7] 1/-1/-1->2->3 [8] 3/-1/-1->2->1 [9] -1/-1/-1->2->3 [10] 3/-1/-1->2->10 [11] 1/-1/-1->2->3 [12] 3/-1/-1->2->1 [13] 1/-1/-1->2->3 [14] 3/-1/-1->2->1 [15] 1/-1/-1->2->3
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS Head  5:  5 13
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS Head  6:  6 14
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NVLS Head  7:  7 15
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 00/16 :  0  7  6  5  4  3  2  1  8 15 14 13 12 11 10  9
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 01/16 :  0  9 10 11 12 13 14 15  8  1  2  3  4  5  6  7
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 02/16 :  0  7  6  5  4  3 10  9  8 15 14 13 12 11  2  1
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 03/16 :  0  1  2 11 12 13 14 15  8  9 10  3  4  5  6  7
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 04/16 :  0  7  6  5 12 11 10  9  8 15 14 13  4  3  2  1
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 05/16 :  0  1  2  3  4 13 14 15  8  9 10 11 12  5  6  7
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 06/16 :  0  7 14 13 12 11 10  9  8 15  6  5  4  3  2  1
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Trees [0] 2/-1/-1->1->0 [1] 0/9/-1->1->-1 [2] -1/-1/-1->1->0 [3] 0/-1/-1->1->2 [4] 2/-1/-1->1->0 [5] 0/-1/-1->1->2 [6] 2/-1/-1->1->0 [7] 0/-1/-1->1->2 [8] 2/-1/-1->1->0 [9] 0/-1/-1->1->9 [10] -1/-1/-1->1->0 [11] 0/-1/-1->1->2 [12] 2/-1/-1->1->0 [13] 0/-1/-1->1->2 [14] 2/-1/-1->1->0 [15] 0/-1/-1->1->2
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO comm 0x588fa2b8d910 rank 10 nRanks 16 nNodes 2 localRanks 8 localRank 2 MNNVL 0
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 07/16 :  0  1  2  3  4  5  6 15  8  9 10 11 12 13 14  7
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/16 :  0  7  6  5  4  3  2  1  8 15 14 13 12 11 10  9
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO comm 0x5bf658212850 rank 11 nRanks 16 nNodes 2 localRanks 8 localRank 3 MNNVL 0
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Trees [0] 12/-1/-1->11->10 [1] 10/-1/-1->11->12 [2] 12/-1/-1->11->10 [3] 10/-1/-1->11->3 [4] -1/-1/-1->11->10 [5] 10/-1/-1->11->12 [6] 12/-1/-1->11->10 [7] 10/-1/-1->11->12 [8] 12/-1/-1->11->10 [9] 10/-1/-1->11->12 [10] 12/-1/-1->11->10 [11] 10/3/-1->11->-1 [12] -1/-1/-1->11->10 [13] 10/-1/-1->11->12 [14] 12/-1/-1->11->10 [15] 10/-1/-1->11->12
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 09/16 :  0  9 10 11 12 13 14 15  8  1  2  3  4  5  6  7
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 10/16 :  0  7  6  5  4  3 10  9  8 15 14 13 12 11  2  1
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 11/16 :  0  1  2 11 12 13 14 15  8  9 10  3  4  5  6  7
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 12/16 :  0  7  6  5 12 11 10  9  8 15 14 13  4  3  2  1
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO comm 0x58e1265518a0 rank 8 nRanks 16 nNodes 2 localRanks 8 localRank 0 MNNVL 0
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 13/16 :  0  1  2  3  4 13 14 15  8  9 10 11 12  5  6  7
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 14/16 :  0  7 14 13 12 11 10  9  8 15  6  5  4  3  2  1
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 15/16 :  0  1  2  3  4  5  6 15  8  9 10 11 12 13 14  7
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Trees [0] 10/-1/-1->9->8 [1] 8/-1/-1->9->1 [2] -1/-1/-1->9->8 [3] 8/-1/-1->9->10 [4] 10/-1/-1->9->8 [5] 8/-1/-1->9->10 [6] 10/-1/-1->9->8 [7] 8/-1/-1->9->10 [8] 10/-1/-1->9->8 [9] 8/1/-1->9->-1 [10] -1/-1/-1->9->8 [11] 8/-1/-1->9->10 [12] 10/-1/-1->9->8 [13] 8/-1/-1->9->10 [14] 10/-1/-1->9->8 [15] 8/-1/-1->9->10
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Trees [0] 1/8/-1->0->-1 [1] 7/-1/-1->0->1 [2] 1/-1/-1->0->7 [3] 7/-1/-1->0->1 [4] 1/-1/-1->0->7 [5] 7/-1/-1->0->1 [6] 1/-1/-1->0->7 [7] -1/-1/-1->0->1 [8] 1/-1/-1->0->8 [9] 7/-1/-1->0->1 [10] 1/-1/-1->0->7 [11] 7/-1/-1->0->1 [12] 1/-1/-1->0->7 [13] 7/-1/-1->0->1 [14] 1/-1/-1->0->7 [15] -1/-1/-1->0->1
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Trees [0] 11/-1/-1->10->9 [1] -1/-1/-1->10->11 [2] 11/-1/-1->10->2 [3] 9/-1/-1->10->11 [4] 11/-1/-1->10->9 [5] 9/-1/-1->10->11 [6] 11/-1/-1->10->9 [7] 9/-1/-1->10->11 [8] 11/-1/-1->10->9 [9] -1/-1/-1->10->11 [10] 11/2/-1->10->-1 [11] 9/-1/-1->10->11 [12] 11/-1/-1->10->9 [13] 9/-1/-1->10->11 [14] 11/-1/-1->10->9 [15] 9/-1/-1->10->11
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Trees [0] 9/-1/-1->8->0 [1] 15/-1/-1->8->9 [2] 9/-1/-1->8->15 [3] 15/-1/-1->8->9 [4] 9/-1/-1->8->15 [5] 15/-1/-1->8->9 [6] 9/-1/-1->8->15 [7] -1/-1/-1->8->9 [8] 9/0/-1->8->-1 [9] 15/-1/-1->8->9 [10] 9/-1/-1->8->15 [11] 15/-1/-1->8->9 [12] 9/-1/-1->8->15 [13] 15/-1/-1->8->9 [14] 9/-1/-1->8->15 [15] -1/-1/-1->8->9
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO comm 0x566029351910 rank 13 nRanks 16 nNodes 2 localRanks 8 localRank 5 MNNVL 0
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Trees [0] 14/-1/-1->13->12 [1] 12/-1/-1->13->14 [2] 14/-1/-1->13->12 [3] 12/-1/-1->13->14 [4] 14/-1/-1->13->12 [5] 12/-1/-1->13->5 [6] -1/-1/-1->13->12 [7] 12/-1/-1->13->14 [8] 14/-1/-1->13->12 [9] 12/-1/-1->13->14 [10] 14/-1/-1->13->12 [11] 12/-1/-1->13->14 [12] 14/-1/-1->13->12 [13] 12/5/-1->13->-1 [14] -1/-1/-1->13->12 [15] 12/-1/-1->13->14
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO comm 0x5b2382b73540 rank 12 nRanks 16 nNodes 2 localRanks 8 localRank 4 MNNVL 0
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Trees [0] 13/-1/-1->12->11 [1] 11/-1/-1->12->13 [2] 13/-1/-1->12->11 [3] -1/-1/-1->12->13 [4] 13/-1/-1->12->4 [5] 11/-1/-1->12->13 [6] 13/-1/-1->12->11 [7] 11/-1/-1->12->13 [8] 13/-1/-1->12->11 [9] 11/-1/-1->12->13 [10] 13/-1/-1->12->11 [11] -1/-1/-1->12->13 [12] 13/4/-1->12->-1 [13] 11/-1/-1->12->13 [14] 13/-1/-1->12->11 [15] 11/-1/-1->12->13
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO comm 0x5565cbba8870 rank 15 nRanks 16 nNodes 2 localRanks 8 localRank 7 MNNVL 0
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO comm 0x57495f1e59b0 rank 14 nRanks 16 nNodes 2 localRanks 8 localRank 6 MNNVL 0
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Trees [0] -1/-1/-1->15->14 [1] 14/-1/-1->15->8 [2] 8/-1/-1->15->14 [3] 14/-1/-1->15->8 [4] 8/-1/-1->15->14 [5] 14/-1/-1->15->8 [6] 8/-1/-1->15->14 [7] 14/-1/-1->15->7 [8] -1/-1/-1->15->14 [9] 14/-1/-1->15->8 [10] 8/-1/-1->15->14 [11] 14/-1/-1->15->8 [12] 8/-1/-1->15->14 [13] 14/-1/-1->15->8 [14] 8/-1/-1->15->14 [15] 14/7/-1->15->-1
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Trees [0] 15/-1/-1->14->13 [1] 13/-1/-1->14->15 [2] 15/-1/-1->14->13 [3] 13/-1/-1->14->15 [4] 15/-1/-1->14->13 [5] -1/-1/-1->14->15 [6] 15/-1/-1->14->6 [7] 13/-1/-1->14->15 [8] 15/-1/-1->14->13 [9] 13/-1/-1->14->15 [10] 15/-1/-1->14->13 [11] 13/-1/-1->14->15 [12] 15/-1/-1->14->13 [13] -1/-1/-1->14->15 [14] 15/6/-1->14->-1 [15] 13/-1/-1->14->15
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 262144.
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO P2P Chunksize set to 262144
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO PROFILER/Plugin: Loaded GCP_NCCL_PROFILER_V4 (v4)
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Successfully loaded external profiler plugin /usr/local/nvidia/lib64/libnccl-profiler.so
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+nccl-pytorch-host-nccl-0-1:450:583 [0] NCCL INFO [Proxy Service] Device 7 CPU core 195
+nccl-pytorch-host-nccl-0-1:450:585 [0] NCCL INFO [Proxy Service UDS] Device 7 CPU core 85
+nccl-pytorch-host-nccl-0-1:447:588 [0] NCCL INFO [Proxy Service UDS] Device 5 CPU core 70
+nccl-pytorch-host-nccl-0-1:447:584 [0] NCCL INFO [Proxy Service] Device 5 CPU core 69
+nccl-pytorch-host-nccl-0-1:444:589 [0] NCCL INFO [Proxy Service] Device 3 CPU core 137
+nccl-pytorch-host-nccl-0-1:444:593 [0] NCCL INFO [Proxy Service UDS] Device 3 CPU core 31
+nccl-pytorch-host-nccl-0-1:441:596 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 145
+nccl-pytorch-host-nccl-0-1:441:590 [0] NCCL INFO [Proxy Service] Device 0 CPU core 140
+nccl-pytorch-host-nccl-0-1:443:587 [0] NCCL INFO [Proxy Service] Device 2 CPU core 26
+nccl-pytorch-host-nccl-0-1:443:592 [0] NCCL INFO [Proxy Service UDS] Device 2 CPU core 142
+nccl-pytorch-host-nccl-0-0:453:590 [0] NCCL INFO [Proxy Service] Device 6 CPU core 189
+nccl-pytorch-host-nccl-0-1:442:586 [0] NCCL INFO [Proxy Service] Device 1 CPU core 135
+nccl-pytorch-host-nccl-0-1:442:591 [0] NCCL INFO [Proxy Service UDS] Device 1 CPU core 141
+nccl-pytorch-host-nccl-0-1:449:606 [0] NCCL INFO [Proxy Service UDS] Device 6 CPU core 106
+nccl-pytorch-host-nccl-0-1:445:602 [0] NCCL INFO [Proxy Service] Device 4 CPU core 215
+nccl-pytorch-host-nccl-0-1:445:605 [0] NCCL INFO [Proxy Service UDS] Device 4 CPU core 106
+nccl-pytorch-host-nccl-0-0:448:593 [0] NCCL INFO [Proxy Service] Device 3 CPU core 51
+nccl-pytorch-host-nccl-0-0:447:591 [0] NCCL INFO [Proxy Service] Device 2 CPU core 163
+nccl-pytorch-host-nccl-0-0:446:594 [0] NCCL INFO [Proxy Service] Device 1 CPU core 136
+nccl-pytorch-host-nccl-0-1:449:603 [0] NCCL INFO [Proxy Service] Device 6 CPU core 215
+nccl-pytorch-host-nccl-0-0:455:592 [0] NCCL INFO [Proxy Service] Device 7 CPU core 204
+nccl-pytorch-host-nccl-0-0:453:597 [0] NCCL INFO [Proxy Service UDS] Device 6 CPU core 67
+nccl-pytorch-host-nccl-0-0:449:601 [0] NCCL INFO [Proxy Service] Device 4 CPU core 94
+nccl-pytorch-host-nccl-0-0:445:595 [0] NCCL INFO [Proxy Service] Device 0 CPU core 26
+nccl-pytorch-host-nccl-0-0:451:607 [0] NCCL INFO [Proxy Service UDS] Device 5 CPU core 209
+nccl-pytorch-host-nccl-0-0:446:600 [0] NCCL INFO [Proxy Service UDS] Device 1 CPU core 140
+nccl-pytorch-host-nccl-0-0:448:599 [0] NCCL INFO [Proxy Service UDS] Device 3 CPU core 52
+nccl-pytorch-host-nccl-0-0:447:604 [0] NCCL INFO [Proxy Service UDS] Device 2 CPU core 53
+nccl-pytorch-host-nccl-0-0:451:598 [0] NCCL INFO [Proxy Service] Device 5 CPU core 187
+nccl-pytorch-host-nccl-0-0:449:609 [0] NCCL INFO [Proxy Service UDS] Device 4 CPU core 98
+nccl-pytorch-host-nccl-0-0:455:603 [0] NCCL INFO [Proxy Service UDS] Device 7 CPU core 206
+nccl-pytorch-host-nccl-0-0:445:605 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 166
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO CC Off, workFifoBytes 1048576
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO NCCL_TUNER_PLUGIN set by environment to none
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO threadThresholds 8/8/64 | 128/8/64 | 512 | 512
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO 16 coll channels, 16 collnet channels, 16 nvls channels, 16 p2p channels, 1 p2p channels per peer
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO ncclCommInitRankConfig comm 0x58e1265518a0 rank 8 nranks 16 cudaDev 0 nvmlDev 0 busId 8f000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Init timings - ncclCommInitRankConfig: rank 8 nranks 16 total 1.86 (kernels 0.22, alloc 1.31, bootstrap 0.00, allgathers 0.01, topo 0.06, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO ncclCommInitRankConfig comm 0x57495f1e59b0 rank 14 nranks 16 cudaDev 6 nvmlDev 6 busId cb000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Init timings - ncclCommInitRankConfig: rank 14 nranks 16 total 1.86 (kernels 0.23, alloc 1.30, bootstrap 0.00, allgathers 0.00, topo 0.06, graphs 0.01, connections 0.24, rest 0.01)
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO ncclCommInitRankConfig comm 0x588fa2b8d910 rank 10 nranks 16 cudaDev 2 nvmlDev 2 busId 96000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Init timings - ncclCommInitRankConfig: rank 10 nranks 16 total 1.86 (kernels 0.23, alloc 1.30, bootstrap 0.01, allgathers 0.01, topo 0.06, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO ncclCommInitRankConfig comm 0x5b2382b73540 rank 12 nranks 16 cudaDev 4 nvmlDev 4 busId c4000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Init timings - ncclCommInitRankConfig: rank 12 nranks 16 total 1.84 (kernels 0.23, alloc 1.20, bootstrap 0.09, allgathers 0.00, topo 0.06, graphs 0.01, connections 0.24, rest 0.01)
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO ncclCommInitRankConfig comm 0x5565cbba8870 rank 15 nranks 16 cudaDev 7 nvmlDev 7 busId cc000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Init timings - ncclCommInitRankConfig: rank 15 nranks 16 total 1.86 (kernels 0.23, alloc 1.30, bootstrap 0.00, allgathers 0.01, topo 0.06, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO ncclCommInitRankConfig comm 0x5bf658212850 rank 11 nranks 16 cudaDev 3 nvmlDev 3 busId 97000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Init timings - ncclCommInitRankConfig: rank 11 nranks 16 total 1.86 (kernels 0.22, alloc 1.30, bootstrap 0.01, allgathers 0.01, topo 0.06, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO ncclCommInitRankConfig comm 0x5c57494dc310 rank 9 nranks 16 cudaDev 1 nvmlDev 1 busId 90000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Init timings - ncclCommInitRankConfig: rank 9 nranks 16 total 1.86 (kernels 0.22, alloc 1.30, bootstrap 0.01, allgathers 0.01, topo 0.06, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO ncclCommInitRankConfig comm 0x566029351910 rank 13 nranks 16 cudaDev 5 nvmlDev 5 busId c5000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Init timings - ncclCommInitRankConfig: rank 13 nranks 16 total 1.86 (kernels 0.22, alloc 1.31, bootstrap 0.00, allgathers 0.01, topo 0.06, graphs 0.01, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO ncclCommInitRankConfig comm 0x57f1f6f348f0 rank 7 nranks 16 cudaDev 7 nvmlDev 7 busId cc000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Init timings - ncclCommInitRankConfig: rank 7 nranks 16 total 1.86 (kernels 0.23, alloc 1.27, bootstrap 0.04, allgathers 0.01, topo 0.05, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO ncclCommInitRankConfig comm 0x58e7d5e4bb50 rank 1 nranks 16 cudaDev 1 nvmlDev 1 busId 90000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Init timings - ncclCommInitRankConfig: rank 1 nranks 16 total 1.86 (kernels 0.23, alloc 1.29, bootstrap 0.02, allgathers 0.01, topo 0.06, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO ncclCommInitRankConfig comm 0x59f838c5b7b0 rank 5 nranks 16 cudaDev 5 nvmlDev 5 busId c5000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Init timings - ncclCommInitRankConfig: rank 5 nranks 16 total 1.86 (kernels 0.23, alloc 1.27, bootstrap 0.03, allgathers 0.01, topo 0.05, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO ncclCommInitRankConfig comm 0x5a6357116e00 rank 4 nranks 16 cudaDev 4 nvmlDev 4 busId c4000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Init timings - ncclCommInitRankConfig: rank 4 nranks 16 total 1.86 (kernels 0.23, alloc 1.28, bootstrap 0.02, allgathers 0.01, topo 0.05, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO ncclCommInitRankConfig comm 0x562b3f56e5b0 rank 0 nranks 16 cudaDev 0 nvmlDev 0 busId 8f000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Init timings - ncclCommInitRankConfig: rank 0 nranks 16 total 1.86 (kernels 0.23, alloc 1.17, bootstrap 0.14, allgathers 0.01, topo 0.05, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO ncclCommInitRankConfig comm 0x59fd345839b0 rank 3 nranks 16 cudaDev 3 nvmlDev 3 busId 97000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Init timings - ncclCommInitRankConfig: rank 3 nranks 16 total 1.86 (kernels 0.23, alloc 1.29, bootstrap 0.02, allgathers 0.01, topo 0.05, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO ncclCommInitRankConfig comm 0x5bf9248ee6f0 rank 6 nranks 16 cudaDev 6 nvmlDev 6 busId cb000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Init timings - ncclCommInitRankConfig: rank 6 nranks 16 total 1.86 (kernels 0.23, alloc 1.28, bootstrap 0.03, allgathers 0.01, topo 0.05, graphs 0.00, connections 0.25, rest 0.01)
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO ncclCommInitRankConfig comm 0x5b606386bbe0 rank 2 nranks 16 cudaDev 2 nvmlDev 2 busId 96000 commId 0x9d388e2c694b93c9 - Init COMPLETE
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Init timings - ncclCommInitRankConfig: rank 2 nranks 16 total 1.86 (kernels 0.23, alloc 1.26, bootstrap 0.05, allgathers 0.01, topo 0.05, graphs 0.00, connections 0.24, rest 0.01)
+#
+#                                                              out-of-place                       in-place          
+#       size         count      type   redop    root     time   algbw   busbw  #wrong     time   algbw   busbw  #wrong 
+#        (B)    (elements)                               (us)  (GB/s)  (GB/s)             (us)  (GB/s)  (GB/s)         
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 00/1 : 13[5] -> 14[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 00/1 : 11[3] -> 12[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 00/1 : 9[1] -> 10[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 00/1 : 4[4] -> 5[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 00/1 : 10[2] -> 11[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 00/1 : 3[3] -> 4[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 00/1 : 6[6] -> 7[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 00/1 : 5[5] -> 6[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 00/1 : 14[6] -> 15[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 00/1 : 12[4] -> 13[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 00/1 : 2[2] -> 3[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 00/1 : 10[2] -> 12[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 00/1 : 1[1] -> 2[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 00/1 : 11[3] -> 13[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 00/1 : 13[5] -> 15[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 00/1 : 12[4] -> 14[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 00/1 : 3[3] -> 5[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 00/1 : 4[4] -> 6[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 00/1 : 5[5] -> 7[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 00/1 : 2[2] -> 4[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 15[7] -> 0[0] [send] via NET/gIB/0(8)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 7[7] -> 8[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 00/1 : 8[0] -> 9[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:441:611 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 141
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 15[7] -> 0[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 00/1 : 0[0] -> 1[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 7[7] -> 8[0] [send] via NET/gIB/0(0)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:614 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 140
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 14[6] -> 0[0] [send] via NET/gIB/0(8)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 6[6] -> 8[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 00/1 : 8[0] -> 10[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 00/1 : 12[4] -> 15[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 6[6] -> 8[0] [send] via NET/gIB/0(0)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 00/1 : 4[4] -> 7[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 14[6] -> 0[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 00/1 : 0[0] -> 2[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 5[5] -> 8[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 00/1 : 8[0] -> 11[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 13[5] -> 0[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 00/1 : 0[0] -> 3[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 15[7] -> 1[1] [send] via NET/gIB/1(9)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 7[7] -> 9[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 00/1 : 9[1] -> 11[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 14[6] -> 1[1] [send] via NET/gIB/1(9)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:612 [0] NCCL INFO [Proxy Progress] Device 1 CPU core 24
+nccl-pytorch-host-nccl-0-1:443:613 [0] NCCL INFO [Proxy Progress] Device 2 CPU core 143
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 7[7] -> 10[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 00/1 : 10[2] -> 13[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 7[7] -> 9[1] [send] via NET/gIB/1(1)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 15[7] -> 1[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 00/1 : 1[1] -> 3[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 6[6] -> 9[1] [send] via NET/gIB/1(1)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:615 [0] NCCL INFO [Proxy Progress] Device 1 CPU core 25
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 6[6] -> 9[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 00/1 : 9[1] -> 12[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 5[5] -> 8[0] [send] via NET/gIB/0(0)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 13[5] -> 0[0] [send] via NET/gIB/0(8)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 14[6] -> 1[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 00/1 : 1[1] -> 4[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 15[7] -> 2[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 00/1 : 2[2] -> 5[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 7[7] -> 10[2] [send] via NET/gIB/2(2)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 5[5] -> 9[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 00/1 : 9[1] -> 13[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 15[7] -> 2[2] [send] via NET/gIB/2(10)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 00/1 : 3[3] -> 6[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:616 [0] NCCL INFO [Proxy Progress] Device 2 CPU core 52
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 13[5] -> 1[1] [send] via NET/gIB/1(9)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 13[5] -> 1[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 00/1 : 1[1] -> 5[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 12[4] -> 0[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 00/1 : 0[0] -> 4[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 00/1 : 11[3] -> 14[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 6[6] -> 10[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 00/1 : 10[2] -> 14[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 12[4] -> 0[0] [send] via NET/gIB/0(8)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 14[6] -> 2[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 00/1 : 2[2] -> 6[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 4[4] -> 8[0] [send] via NET/gIB/0(0)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 6[6] -> 10[2] [send] via NET/gIB/2(2)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 5[5] -> 9[1] [send] via NET/gIB/1(1)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 12[4] -> 1[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 00/1 : 1[1] -> 6[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 14[6] -> 2[2] [send] via NET/gIB/2(10)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 4[4] -> 9[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 00/1 : 9[1] -> 14[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 13[5] -> 2[2] [send] via NET/gIB/2(10)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 5[5] -> 10[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 00/1 : 10[2] -> 15[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 13[5] -> 2[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 00/1 : 2[2] -> 7[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 4[4] -> 8[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 00/1 : 8[0] -> 12[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 3[3] -> 8[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 00/1 : 8[0] -> 13[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 11[3] -> 0[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 00/1 : 0[0] -> 5[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 5[5] -> 10[2] [send] via NET/gIB/2(2)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 7[7] -> 11[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 00/1 : 11[3] -> 15[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 15[7] -> 3[3] [send] via NET/gIB/3(11)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 14[6] -> 3[3] [send] via NET/gIB/3(11)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:614 [0] NCCL INFO [Proxy Progress] Device 3 CPU core 149
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 7[7] -> 12[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:615 [0] NCCL INFO [Proxy Progress] Device 4 CPU core 221
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 12[4] -> 1[1] [send] via NET/gIB/1(9)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 7[7] -> 11[3] [send] via NET/gIB/3(3)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:617 [0] NCCL INFO [Proxy Progress] Device 3 CPU core 53
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 15[7] -> 3[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 00/1 : 3[3] -> 7[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 6[6] -> 11[3] [send] via NET/gIB/3(3)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 6[6] -> 11[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 14[6] -> 3[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 3[3] -> 8[0] [send] via NET/gIB/0(0)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 11[3] -> 1[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 00/1 : 1[1] -> 7[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 11[3] -> 0[0] [send] via NET/gIB/0(8)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 15[7] -> 4[4] [send] via NET/gIB/4(12)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 10[2] -> 0[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 00/1 : 0[0] -> 6[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 4[4] -> 10[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 5[5] -> 11[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 11[3] -> 1[1] [send] via NET/gIB/1(9)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 10[2] -> 0[0] [send] via NET/gIB/0(8)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 13[5] -> 3[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 2[2] -> 8[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 00/1 : 8[0] -> 14[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 3[3] -> 9[1] [send] via NET/gIB/1(1)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 14[6] -> 4[4] [send] via NET/gIB/4(12)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:618 [0] NCCL INFO [Proxy Progress] Device 4 CPU core 98
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 15[7] -> 4[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 7[7] -> 12[4] [send] via NET/gIB/4(4)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 6[6] -> 12[4] [send] via NET/gIB/4(4)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 15[7] -> 5[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 4[4] -> 9[1] [send] via NET/gIB/1(1)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 9[1] -> 0[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 00/1 : 0[0] -> 7[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:451:619 [0] NCCL INFO [Proxy Progress] Device 5 CPU core 188
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 5[5] -> 11[3] [send] via NET/gIB/3(3)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 12[4] -> 2[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 6[6] -> 12[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 12[4] -> 2[2] [send] via NET/gIB/2(10)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 14[6] -> 4[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 7[7] -> 13[5] [send] via NET/gIB/5(5)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 2[2] -> 8[0] [send] via NET/gIB/0(0)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 3[3] -> 9[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 00/1 : 9[1] -> 15[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 4[4] -> 10[2] [send] via NET/gIB/2(2)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 4[4] -> 11[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 10[2] -> 1[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 11[3] -> 2[2] [send] via NET/gIB/2(10)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 1[1] -> 8[0] [send] via NET/gIB/0(0)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 13[5] -> 4[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 4[4] -> 11[3] [send] via NET/gIB/3(3)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 5[5] -> 12[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 15[7] -> 5[5] [send] via NET/gIB/5(13)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:616 [0] NCCL INFO [Proxy Progress] Device 5 CPU core 169
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 11[3] -> 2[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 12[4] -> 3[3] [send] via NET/gIB/3(11)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 3[3] -> 10[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 2[2] -> 9[1] [send] via NET/gIB/1(1)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 1[1] -> 8[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 00/1 : 8[0] -> 15[7] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 14[6] -> 5[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 7[7] -> 13[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 10[2] -> 1[1] [send] via NET/gIB/1(9)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 2[2] -> 9[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 5[5] -> 12[4] [send] via NET/gIB/4(4)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 13[5] -> 3[3] [send] via NET/gIB/3(11)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 9[1] -> 0[0] [send] via NET/gIB/0(8)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 3[3] -> 11[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 11[3] -> 3[3] [send] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 9[1] -> 1[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 1[1] -> 9[1] [send] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 10[2] -> 2[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 2[2] -> 10[2] [send] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 6[6] -> 13[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 12[4] -> 3[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 1[1] -> 9[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 9[1] -> 1[1] [send] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 13[5] -> 4[4] [send] via NET/gIB/4(12)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 3[3] -> 10[2] [send] via NET/gIB/2(2)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 0[0] -> 9[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 8[0] -> 1[1] [receive] via NET/gIB/1/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 9[1] -> 2[2] [send] via NET/gIB/2(10)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 1[1] -> 10[2] [send] via NET/gIB/2(2)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 12[4] -> 4[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 4[4] -> 12[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 4[4] -> 12[4] [send] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 12[4] -> 4[4] [send] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 11[3] -> 3[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 2[2] -> 10[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 3[3] -> 11[3] [send] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 10[2] -> 2[2] [send] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 11[3] -> 4[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 3[3] -> 12[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 4[4] -> 13[5] [send] via NET/gIB/5(5)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 9[1] -> 2[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 1[1] -> 10[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 10[2] -> 3[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 12[4] -> 5[5] [send] via NET/gIB/5(13)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 2[2] -> 11[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 2[2] -> 11[3] [send] via NET/gIB/3(3)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 3[3] -> 12[4] [send] via NET/gIB/4(4)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 10[2] -> 3[3] [send] via NET/gIB/3(11)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 11[3] -> 4[4] [send] via NET/gIB/4(12)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 0[0] -> 10[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 9[1] -> 3[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 8[0] -> 2[2] [receive] via NET/gIB/2/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 3[3] -> 13[5] [send] via NET/gIB/5(5)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 1[1] -> 11[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 10[2] -> 4[4] [send] via NET/gIB/4(12)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 11[3] -> 5[5] [send] via NET/gIB/5(13)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 2[2] -> 12[4] [send] via NET/gIB/4(4)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 7[7] -> 14[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 15[7] -> 6[6] [send] via NET/gIB/6(14)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:617 [0] NCCL INFO [Proxy Progress] Device 6 CPU core 110
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 14[6] -> 5[5] [send] via NET/gIB/5(13)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 0[0] -> 8[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 8[0] -> 0[0] [send] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 7[7] -> 14[6] [send] via NET/gIB/6(6)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 15[7] -> 6[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:620 [0] NCCL INFO [Proxy Progress] Device 6 CPU core 91
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 6[6] -> 13[5] [send] via NET/gIB/5(5)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 13[5] -> 5[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 5[5] -> 13[5] [send] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 8[0] -> 0[0] [receive] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 0[0] -> 8[0] [send] via NET/gIB/0/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 6[6] -> 14[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 14[6] -> 6[6] [send] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 0[0] -> 9[1] [send] via NET/gIB/1(1)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 14[6] -> 6[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 6[6] -> 14[6] [send] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 5[5] -> 13[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 8[0] -> 1[1] [send] via NET/gIB/1(9)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 13[5] -> 5[5] [send] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 13[5] -> 6[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 12[4] -> 5[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 4[4] -> 13[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 5[5] -> 14[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 13[5] -> 6[6] [send] via NET/gIB/6(14)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 5[5] -> 14[6] [send] via NET/gIB/6(6)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 1[1] -> 11[3] [send] via NET/gIB/3(3)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 10[2] -> 4[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 2[2] -> 12[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 4[4] -> 14[6] [send] via NET/gIB/6(6)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 12[4] -> 6[6] [send] via NET/gIB/6(14)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 9[1] -> 3[3] [send] via NET/gIB/3(11)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 14[6] -> 7[7] [send] via NET/gIB/7(15)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 7[7] -> 15[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 15[7] -> 7[7] [send] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:618 [0] NCCL INFO [Proxy Progress] Device 7 CPU core 88
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 11[3] -> 5[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 15[7] -> 7[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 7[7] -> 15[7] [send] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 6[6] -> 15[7] [send] via NET/gIB/7(7)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 5[5] -> 15[7] [send] via NET/gIB/7(7)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:621 [0] NCCL INFO [Proxy Progress] Device 7 CPU core 213
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 3[3] -> 13[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 14[6] -> 7[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 00/1 : 7[7] -> 0[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 13[5] -> 7[7] [send] via NET/gIB/7(15)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 6[6] -> 15[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 0[0] -> 11[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 11[3] -> 6[6] [send] via NET/gIB/6(14)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 00/1 : 15[7] -> 8[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 8[0] -> 3[3] [receive] via NET/gIB/3/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 3[3] -> 14[6] [send] via NET/gIB/6(6)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 13[5] -> 7[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 00/1 : 7[7] -> 1[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 4[4] -> 14[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 00/1 : 14[6] -> 8[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 12[4] -> 6[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 00/1 : 6[6] -> 0[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 5[5] -> 15[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 00/1 : 15[7] -> 9[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 0[0] -> 10[2] [send] via NET/gIB/2(2)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 11[3] -> 6[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 00/1 : 6[6] -> 1[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 4[4] -> 15[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 00/1 : 15[7] -> 10[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 1[1] -> 12[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 10[2] -> 5[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 00/1 : 5[5] -> 0[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 9[1] -> 4[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 12[4] -> 7[7] [send] via NET/gIB/7(15)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 4[4] -> 15[7] [send] via NET/gIB/7(7)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 9[1] -> 4[4] [send] via NET/gIB/4(12)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 8[0] -> 2[2] [send] via NET/gIB/2(10)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 10[2] -> 5[5] [send] via NET/gIB/5(13)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 3[3] -> 14[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 00/1 : 14[6] -> 9[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 12[4] -> 7[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 00/1 : 7[7] -> 2[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 0[0] -> 11[3] [send] via NET/gIB/3(3)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 08/1 : 8[0] -> 4[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 00/1 : 4[4] -> 0[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 2[2] -> 13[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 00/1 : 13[5] -> 8[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 3[3] -> 15[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 00/1 : 15[7] -> 11[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 2[2] -> 14[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 00/1 : 14[6] -> 10[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 8[0] -> 3[3] [send] via NET/gIB/3(11)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 08/1 : 11[3] -> 7[7] [send] via NET/gIB/7(15)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 08/1 : 3[3] -> 15[7] [send] via NET/gIB/7(7)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 9[1] -> 5[5] [send] via NET/gIB/5(13)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 10[2] -> 6[6] [send] via NET/gIB/6(14)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 8[0] -> 4[4] [send] via NET/gIB/4(12)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 9[1] -> 5[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 00/1 : 5[5] -> 1[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 2[2] -> 13[5] [send] via NET/gIB/5(5)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 2[2] -> 15[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 00/1 : 15[7] -> 12[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 1[1] -> 12[4] [send] via NET/gIB/4(4)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 11[3] -> 7[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 00/1 : 7[7] -> 3[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 0[0] -> 12[4] [send] via NET/gIB/4(4)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 10[2] -> 6[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 00/1 : 6[6] -> 2[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 1[1] -> 13[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 00/1 : 13[5] -> 9[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 00/1 : 4[4] -> 1[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 08/1 : 0[0] -> 12[4] [receive] via NET/gIB/4/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 00/1 : 12[4] -> 8[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 10[2] -> 7[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 00/1 : 7[7] -> 4[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 00/1 : 11[3] -> 8[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 2[2] -> 14[6] [send] via NET/gIB/6(6)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 00/1 : 3[3] -> 0[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 9[1] -> 6[6] [send] via NET/gIB/6(14)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 9[1] -> 6[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 00/1 : 6[6] -> 3[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 1[1] -> 13[5] [send] via NET/gIB/5(5)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 0[0] -> 13[5] [send] via NET/gIB/5(5)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 1[1] -> 14[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 00/1 : 14[6] -> 11[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 08/1 : 8[0] -> 5[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 00/1 : 5[5] -> 2[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 00/1 : 12[4] -> 9[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 8[0] -> 5[5] [send] via NET/gIB/5(13)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 08/1 : 0[0] -> 13[5] [receive] via NET/gIB/5/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 00/1 : 13[5] -> 10[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 08/1 : 8[0] -> 6[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 00/1 : 6[6] -> 4[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 08/1 : 10[2] -> 7[7] [send] via NET/gIB/7(15)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 9[1] -> 7[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 00/1 : 7[7] -> 5[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 00/1 : 3[3] -> 1[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 08/1 : 2[2] -> 15[7] [send] via NET/gIB/7(7)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 1[1] -> 14[6] [send] via NET/gIB/6(6)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 00/1 : 2[2] -> 0[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 00/1 : 5[5] -> 3[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 08/1 : 0[0] -> 14[6] [receive] via NET/gIB/6/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 00/1 : 14[6] -> 12[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 8[0] -> 6[6] [send] via NET/gIB/6(14)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 00/1 : 4[4] -> 2[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 08/1 : 1[1] -> 15[7] [send] via NET/gIB/7(7)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Channel 00/1 : 5[5] -> 4[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 1[1] -> 15[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 00/1 : 15[7] -> 13[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Channel 00/1 : 6[6] -> 5[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Channel 00/1 : 4[4] -> 3[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Channel 00/1 : 3[3] -> 2[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 00/1 : 12[4] -> 10[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 08/1 : 9[1] -> 7[7] [send] via NET/gIB/7(15)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 00/1 : 11[3] -> 9[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 08/1 : 8[0] -> 7[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Channel 00/1 : 7[7] -> 6[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Channel 00/1 : 1[1] -> 0[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Channel 00/1 : 9[1] -> 8[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 00/1 : 10[2] -> 8[0] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 00/1 : 13[5] -> 11[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Channel 00/1 : 10[2] -> 9[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 08/1 : 0[0] -> 15[7] [receive] via NET/gIB/7/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Channel 00/1 : 15[7] -> 14[6] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Channel 00/1 : 12[4] -> 11[3] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 0[0] -> 14[6] [send] via NET/gIB/6(6)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Channel 00/1 : 13[5] -> 12[4] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Channel 00/1 : 11[3] -> 10[2] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Channel 08/1 : 8[0] -> 7[7] [send] via NET/gIB/7(15)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Channel 00/1 : 14[6] -> 13[5] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Channel 00/1 : 2[2] -> 1[1] via P2P/CUMEM
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Channel 08/1 : 0[0] -> 15[7] [send] via NET/gIB/7(7)/GDRDMA/Shared
+nccl-pytorch-host-nccl-0-0:445:595 [0] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-1:441:590 [0] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-0:445:595 [0] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-0:445:595 [0] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-1:441:590 [0] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-1:441:590 [0] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-0:446:594 [1] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-1:442:586 [1] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-0:446:594 [1] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-0:446:594 [1] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-1:442:586 [1] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-1:442:586 [1] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-1:441:590 [0] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-0:447:591 [2] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-1:443:587 [2] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-0:445:595 [0] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-0:447:591 [2] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-0:447:591 [2] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-1:443:587 [2] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-1:443:587 [2] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-1:442:586 [1] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-0:451:598 [5] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-1:447:584 [5] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-0:446:594 [1] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-1:447:584 [5] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-1:447:584 [5] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-0:451:598 [5] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-0:451:598 [5] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-1:445:602 [4] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-0:449:601 [4] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-1:443:587 [2] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-0:447:591 [2] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-0:449:601 [4] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-0:449:601 [4] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-0:448:593 [3] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-1:444:589 [3] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-1:445:602 [4] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-1:445:602 [4] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-1:444:589 [3] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-1:444:589 [3] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-0:448:593 [3] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-0:448:593 [3] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-1:445:602 [4] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-0:448:593 [3] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-1:450:583 [7] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-0:455:592 [7] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-0:449:601 [4] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-0:455:592 [7] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-0:455:592 [7] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-1:450:583 [7] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-1:450:583 [7] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-1:449:603 [6] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-0:453:590 [6] NCCL INFO NCCL_IB_QPS_PER_CONNECTION set by environment to 4.
+nccl-pytorch-host-nccl-0-1:444:589 [3] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-0:453:590 [6] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-0:453:590 [6] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-1:449:603 [6] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+nccl-pytorch-host-nccl-0-1:450:583 [7] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-1:449:603 [6] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-1:449:603 [6] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-0:451:598 [5] NCCL INFO NCCL_IB_TC set by environment to 52.
+nccl-pytorch-host-nccl-0-1:447:584 [5] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-0:455:592 [7] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+nccl-pytorch-host-nccl-0-0:453:590 [6] NCCL INFO NCCL_IB_FIFO_TC set by environment to 84.
+        1024            16     float    none      -1    41.29    0.02    0.02       0    38.72    0.03    0.02    N/A
+        2048            32     float    none      -1    38.66    0.05    0.05       0    39.01    0.05    0.05    N/A
+        4096            64     float    none      -1    38.51    0.11    0.10       0    38.38    0.11    0.10    N/A
+        8192           128     float    none      -1    38.61    0.21    0.20       0    37.99    0.22    0.20    N/A
+       16384           256     float    none      -1    38.85    0.42    0.40       0    38.72    0.42    0.40    N/A
+       32768           512     float    none      -1    40.60    0.81    0.76       0    40.64    0.81    0.76    N/A
+       65536          1024     float    none      -1    39.93    1.64    1.54       0    39.67    1.65    1.55    N/A
+      131072          2048     float    none      -1    42.43    3.09    2.90       0    44.07    2.97    2.79    N/A
+      262144          4096     float    none      -1    50.79    5.16    4.84       0    49.25    5.32    4.99    N/A
+      524288          8192     float    none      -1    57.72    9.08    8.52       0    59.24    8.85    8.30    N/A
+     1048576         16384     float    none      -1    74.37   14.10   13.22       0    73.21   14.32   13.43    N/A
+     2097152         32768     float    none      -1    95.87   21.88   20.51       0    96.02   21.84   20.47    N/A
+     4194304         65536     float    none      -1   143.91   29.14   27.32       0   153.98   27.24   25.54    N/A
+     8388608        131072     float    none      -1   251.08   33.41   31.32       0   251.45   33.36   31.28    N/A
+    16777216        262144     float    none      -1   445.28   37.68   35.32       0   441.78   37.98   35.60    N/A
+    33554432        524288     float    none      -1   850.02   39.47   37.01       0   842.66   39.82   37.33    N/A
+    67108864       1048576     float    none      -1  1602.33   41.88   39.26       0  1590.25   42.20   39.56    N/A
+   134217728       2097152     float    none      -1  3073.09   43.68   40.95       0  3061.16   43.85   41.11    N/A
+   268435456       4194304     float    none      -1  6019.58   44.59   41.81       0  5989.56   44.82   42.02    N/A
+   536870912       8388608     float    none      -1  11908.3   45.08   42.27       0  11854.9   45.29   42.46    N/A
+  1073741824      16777216     float    none      -1  23679.5   45.34   42.51       0  23569.7   45.56   42.71    N/A
+  2147483648      33554432     float    none      -1  47202.3   45.50   42.65       0  47043.0   45.65   42.80    N/A
+  4294967296      67108864     float    none      -1  94181.3   45.60   42.75       0  93982.9   45.70   42.84    N/A
+  8589934592     134217728     float    none      -1   188178   45.65   42.79       0   187788   45.74   42.88    N/A
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO comm 0x5c57494dc310 rank 9 nranks 16 cudaDev 1 busId 90000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO comm 0x588fa2b8d910 rank 10 nranks 16 cudaDev 2 busId 96000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO comm 0x5b606386bbe0 rank 2 nranks 16 cudaDev 2 busId 96000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO comm 0x59fd345839b0 rank 3 nranks 16 cudaDev 3 busId 97000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO comm 0x5bf658212850 rank 11 nranks 16 cudaDev 3 busId 97000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO comm 0x5a6357116e00 rank 4 nranks 16 cudaDev 4 busId c4000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO comm 0x5b2382b73540 rank 12 nranks 16 cudaDev 4 busId c4000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO comm 0x566029351910 rank 13 nranks 16 cudaDev 5 busId c5000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO comm 0x57495f1e59b0 rank 14 nranks 16 cudaDev 6 busId cb000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO comm 0x59f838c5b7b0 rank 5 nranks 16 cudaDev 5 busId c5000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO comm 0x5bf9248ee6f0 rank 6 nranks 16 cudaDev 6 busId cb000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO comm 0x5565cbba8870 rank 15 nranks 16 cudaDev 7 busId cc000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO comm 0x57f1f6f348f0 rank 7 nranks 16 cudaDev 7 busId cc000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO comm 0x562b3f56e5b0 rank 0 nranks 16 cudaDev 0 busId 8f000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO comm 0x58e1265518a0 rank 8 nranks 16 cudaDev 0 busId 8f000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO comm 0x58e7d5e4bb50 rank 1 nranks 16 cudaDev 1 busId 90000 - Destroy COMPLETE
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO Unloading plugin libnccl-net.so
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO PROFILER/Plugin: Closing profiler plugin GCP_NCCL_PROFILER_V4
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO Unloading plugin libnccl-net.so
+# Out of bounds values : 0 OK
+# Avg bus bandwidth    : 21.6288 
+#
+# Collective test concluded: alltoall_perf
+#
+
+nccl-pytorch-host-nccl-0-0:451:451 [5] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-1:443:443 [2] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-1:449:449 [6] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-0:447:447 [2] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-1:441:441 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-1:447:447 [5] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-1:445:445 [4] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-0:449:449 [4] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-1:442:442 [1] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-1:450:450 [7] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-0:453:453 [6] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-0:446:446 [1] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-0:455:455 [7] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-0:448:448 [3] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-0:445:445 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+nccl-pytorch-host-nccl-0-1:444:444 [3] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
++ echo 'Benchmark finished. Signalling workers...'
++ (( i=1 ))
++ (( i<2 ))
++ TARGET=nccl-pytorch-host-nccl-0-1.nccl-host.default.svc.cluster.local
+Benchmark finished. Signalling workers...
+++ getent hosts nccl-pytorch-host-nccl-0-1.nccl-host.default.svc.cluster.local
+++ head -n 1
+++ awk '{print $1}'
++ IP=10.64.0.21
++ ssh -o ConnectTimeout=2 10.64.0.21 'touch /tmp/done'
+Warning: Permanently added '10.64.0.21' (ED25519) to the list of known hosts.
++ (( i++ ))
++ (( i<2 ))
++ echo 'All done.'
++ sleep infinity
+All done.

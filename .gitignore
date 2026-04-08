@@ -1,5 +1,6 @@
 */
 !pulumi/
+!repro/
 !deepep/
 pulumi/*/
 pulumi/.*/

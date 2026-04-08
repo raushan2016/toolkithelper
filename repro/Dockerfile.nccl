@@ -1,0 +1,27 @@
+# Stage 1: Build nccl-tests
+FROM pytorch/pytorch:2.9.1-cuda13.0-cudnn9-devel AS builder
+
+RUN apt-get update && apt-get install -y --no-install-recommends git make g++ libopenmpi-dev
+
+RUN git clone https://github.com/NVIDIA/nccl-tests.git /nccl-tests
+WORKDIR /nccl-tests
+# Build with MPI support
+RUN make MPI=1 NCCL_HOME=/usr/local/cuda MPI_HOME=/usr/lib/x86_64-linux-gnu/openmpi
+
+# Stage 2: Runtime image (using devel to ensure all libs are present)
+FROM pytorch/pytorch:2.9.1-cuda13.0-cudnn9-devel
+
+# Install OpenMPI runtime and SSH server/client
+RUN apt-get update && apt-get install -y --no-install-recommends openmpi-bin openssh-server openssh-client && \
+    mkdir -p /var/run/sshd
+
+# Copy the compiled binary from the builder stage
+COPY --from=builder /nccl-tests/build/alltoall_perf /usr/local/bin/alltoall_perf
+
+# Configure SSH for non-interactive use by MPI
+RUN sed -i 's/[ #]\(.*StrictHostKeyChecking \).*/ \1no/g' /etc/ssh/ssh_config && \
+    echo "    UserKnownHostsFile /dev/null" >> /etc/ssh/ssh_config && \
+    sed -i 's/#\(StrictModes \).*/\1no/g' /etc/ssh/sshd_config
+
+# Expose SSH port
+EXPOSE 22

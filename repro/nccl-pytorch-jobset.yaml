@@ -1,0 +1,155 @@
+apiVersion: jobset.x-k8s.io/v1alpha2
+kind: JobSet
+metadata:
+  name: nccl-pytorch
+  labels:
+    app: nccl-test
+spec:
+  network:
+    enableDNSHostnames: true
+    subdomain: nccl
+  replicatedJobs:
+  - name: nccl
+    replicas: 1
+    template:
+      spec:
+        parallelism: 2
+        completions: 2
+        backoffLimit: 0
+        completionMode: Indexed
+        template:
+          spec:
+            nodeSelector:
+              cloud.google.com/gke-accelerator: nvidia-h200-141gb
+            containers:
+            - name: mpi
+              image: us-central1-docker.pkg.dev/supercomputer-testing/raushankr/nccl-test-pytorch:2.9.1-cuda13.0-cudnn9
+              imagePullPolicy: Always
+              securityContext:
+                privileged: true
+              env:
+              - name: WORLD_SIZE
+                value: "2"
+              - name: NCCL_DEBUG
+                value: "INFO"
+              - name: LD_LIBRARY_PATH
+                value: "/usr/lib/x86_64-linux-gnu:/usr/local/nvidia/lib:/usr/local/nvidia/lib64"
+              command:
+              - /bin/bash
+              - -c
+              - |
+                set -ex
+                
+                # --- SSH SETUP ---
+                mkdir -p /root/.ssh
+                cp /etc/secret-volume/id_rsa /root/.ssh/id_rsa
+                cp /etc/secret-volume/authorized_keys /root/.ssh/authorized_keys
+                chmod 700 /root/.ssh
+                chmod 600 /root/.ssh/id_rsa /root/.ssh/authorized_keys
+                
+                printf "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile /dev/null\n" >> /etc/ssh/ssh_config
+                
+                echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+                echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
+                
+                mkdir -p /var/run/sshd
+                /usr/sbin/sshd -D &
+                
+                until ssh -4 -o ConnectTimeout=2 -o LogLevel=QUIET 127.0.0.1 exit 2>/dev/null; do sleep 1; done
+                
+                export DEBIAN_FRONTEND=noninteractive
+                apt update -y && apt install -y iputils-ping dnsutils
+                
+                # Debug info
+                echo "=== Debug Info ==="
+                echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+                ldconfig -p | grep cuda || true
+                find /usr -name libcudart.so* || true
+                nslookup nccl || true
+                
+                PREFIX=${HOSTNAME%-*} 
+                DOMAIN=$(hostname -d)
+                [[ -z "$DOMAIN" ]] && DOMAIN="nccl.$(awk '/search/ {print $2}' /etc/resolv.conf)"
+                
+                if [[ "$JOB_COMPLETION_INDEX" -ne 0 ]]; then
+                    echo "Worker waiting for completion flag..."
+                    until [[ -f /tmp/done ]]; do sleep 5; done
+                    echo "Completion flag found. Exiting."
+                    exit 0
+                fi
+                
+                # --- DRIVER LOGIC ---
+                HOSTFILE=/tmp/hostfile
+                rm -f ${HOSTFILE}
+                
+                for ((i=0; i<$WORLD_SIZE; i++)); do
+                    TARGET="${PREFIX}-${i}.${DOMAIN}"
+                    for ((r=0; r<150; r++)); do
+                        IP=$(getent hosts ${TARGET} | awk '{print $1}' | head -n 1)
+                        [[ -n "$IP" ]] && break
+                        sleep 2
+                    done
+                    if [[ -z "$IP" ]]; then exit 1; fi
+                    echo "${IP} slots=8" >> ${HOSTFILE}
+                    until ssh -o ConnectTimeout=2 ${IP} echo "ready"; do sleep 5; done
+                done
+                
+                echo "All workers ready. Starting MPI..."
+                
+                # Set environment variables for NCCL
+                export NCCL_SOCKET_IFNAME=eth0
+                export NCCL_DEBUG=INFO
+                export NCCL_TUNER_PLUGIN=none
+                export NCCL_NET=gIB
+
+                # Construct ENV_VARS for mpirun
+                ENV_VARS=$(echo ${!NCCL*} ${!OMPI*} LD_LIBRARY_PATH PATH | sed 's/ / -x /g')
+                
+                mpirun \
+                    --allow-run-as-root \
+                    -np $((8 * ${WORLD_SIZE})) \
+                    -hostfile ${HOSTFILE} \
+                    -mca btl_tcp_if_include eth0 \
+                    -mca oob_tcp_if_include eth0 \
+                    -mca pml ob1 \
+                    -mca btl ^openib \
+                    --bind-to none \
+                    -map-by slot \
+                    -x $ENV_VARS \
+                    /usr/local/bin/alltoall_perf \
+                    -b 1K -e 8G -f 2 -g 1 -w 5 --iters 100 -c 1
+                
+                echo "Benchmark finished. Signalling workers..."
+                for ((i=1; i<$WORLD_SIZE; i++)); do
+                    TARGET="${PREFIX}-${i}.${DOMAIN}"
+                    IP=$(getent hosts ${TARGET} | awk '{print $1}' | head -n 1)
+                    ssh -o ConnectTimeout=2 ${IP} "touch /tmp/done"
+                done
+                
+                echo "All done."
+                sleep infinity
+              resources:
+                requests:
+                  nvidia.com/gpu: 8
+                limits:
+                  nvidia.com/gpu: 8
+              volumeMounts:
+              - name: ssh-key-volume
+                mountPath: /etc/secret-volume
+                readOnly: true
+              - mountPath: /dev/shm
+                name: dshm
+            volumes:
+            - name: ssh-key-volume
+              secret:
+                secretName: nccl-ssh-keys
+                defaultMode: 256 # 0400
+            - emptyDir:
+                medium: Memory
+              name: dshm
+            tolerations:
+            - key: nvidia.com/gpu
+              operator: Exists
+            - effect: NoSchedule
+              key: nvidia.com/gpu
+              operator: Exists
