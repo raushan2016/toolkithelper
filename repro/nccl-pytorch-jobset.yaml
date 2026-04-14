@@ -23,7 +23,7 @@ spec:
               cloud.google.com/gke-accelerator: nvidia-h200-141gb
             containers:
             - name: mpi
-              image: us-central1-docker.pkg.dev/supercomputer-testing/raushankr/nccl-test-pytorch:2.9.1-cuda13.0-cudnn9
+              image: us-central1-docker.pkg.dev/supercomputer-testing/raushankr/nccl-test-pytorch:gib-in-container
               imagePullPolicy: Always
               securityContext:
                 privileged: true
@@ -31,9 +31,7 @@ spec:
               - name: WORLD_SIZE
                 value: "2"
               - name: NCCL_DEBUG
-                value: "INFO"
-              - name: LD_LIBRARY_PATH
-                value: "/usr/lib/x86_64-linux-gnu:/usr/local/nvidia/lib:/usr/local/nvidia/lib64"
+                value: "TRACE"
               command:
               - /bin/bash
               - -c
@@ -60,6 +58,16 @@ spec:
                 export DEBIAN_FRONTEND=noninteractive
                 apt update -y && apt install -y iputils-ping dnsutils
                 
+                # --- gib SETUP ---
+                export LD_LIBRARY_PATH=/usr/local/gib/lib64:$LD_LIBRARY_PATH
+
+                # Source host NCCL env if available
+                if [ -f /usr/local/gib/scripts/set_nccl_env.sh ]; then
+                    source /usr/local/gib/scripts/set_nccl_env.sh
+                else
+                    echo "Warning: /usr/local/gib/scripts/set_nccl_env.sh not found!"
+                fi
+
                 # Debug info
                 echo "=== Debug Info ==="
                 echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
@@ -86,21 +94,18 @@ spec:
                     TARGET="${PREFIX}-${i}.${DOMAIN}"
                     for ((r=0; r<150; r++)); do
                         IP=$(getent hosts ${TARGET} | awk '{print $1}' | head -n 1)
-                        [[ -n "$IP" ]] && break
-                        sleep 2
+                        if [[ -n "$IP" ]]; then
+                            if ssh -o ConnectTimeout=2 -o StrictHostKeyChecking=no ${IP} echo ready >/dev/null 2>&1; then
+                                break
+                            fi
+                        fi
+                        sleep 5
                     done
                     if [[ -z "$IP" ]]; then exit 1; fi
                     echo "${IP} slots=8" >> ${HOSTFILE}
-                    until ssh -o ConnectTimeout=2 ${IP} echo "ready"; do sleep 5; done
                 done
                 
                 echo "All workers ready. Starting MPI..."
-                
-                # Set environment variables for NCCL
-                export NCCL_SOCKET_IFNAME=eth0
-                export NCCL_DEBUG=INFO
-                export NCCL_TUNER_PLUGIN=none
-                export NCCL_NET=gIB
 
                 # Construct ENV_VARS for mpirun
                 ENV_VARS=$(echo ${!NCCL*} ${!OMPI*} LD_LIBRARY_PATH PATH | sed 's/ / -x /g')
