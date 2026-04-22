@@ -1,36 +1,78 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: deepep-headless
+  name: etcd
   namespace: ${NAMESPACE}
   labels:
-    app: deepep
+    app: etcd
+spec:
+  ports:
+  - port: 2379
+    name: client
+  selector:
+    app: etcd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etcd
+  namespace: ${NAMESPACE}
+  labels:
+    app: etcd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etcd
+  template:
+    metadata:
+      labels:
+        app: etcd
+    spec:
+      containers:
+      - name: etcd
+        image: quay.io/coreos/etcd:v3.5.17
+        command:
+        - /usr/local/bin/etcd
+        - --listen-client-urls=http://0.0.0.0:2379
+        - --advertise-client-urls=http://etcd.${NAMESPACE}.svc.cluster.local:2379
+        ports:
+        - containerPort: 2379
+          name: client
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hybrid-ep-headless
+  namespace: ${NAMESPACE}
+  labels:
+    app: hybrid-ep
 spec:
   ports:
   - port: 29500
     name: torch-dist
   clusterIP: None
   selector:
-    app: deepep
+    app: hybrid-ep
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: deepep-benchmark
+  name: hybrid-ep-benchmark
   namespace: ${NAMESPACE}
   labels:
-    app: deepep
+    app: hybrid-ep
 spec:
-  serviceName: 'deepep-headless'
+  serviceName: 'hybrid-ep-headless'
   podManagementPolicy: Parallel
   replicas: ${NODES}
   selector:
     matchLabels:
-      app: deepep
+      app: hybrid-ep
   template:
     metadata:
       labels:
-        app: deepep
+        app: hybrid-ep
     spec:
       shareProcessNamespace: true
       hostIPC: true
@@ -44,10 +86,10 @@ spec:
               - key: app
                 operator: In
                 values:
-                - deepep
+                - hybrid-ep
             topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: deepep
+      - name: hybrid-ep
         image: ${IMAGE}
         imagePullPolicy: Always
         command:
@@ -55,42 +97,26 @@ spec:
         - -c
         - |
           echo "=================================================="
-          echo "Starting DeepEP Benchmark (Node: ${POD_NAME})"
+          echo "Starting Hybrid-EP Benchmark (Node: ${POD_NAME})"
           echo "=================================================="
-          export NVSHMEM_INFO=true
-          export NVSHMEM_IB_ENABLE_IBGDA=1
           
-          # Force Pure IBGDA
-          export NVSHMEM_REMOTE_TRANSPORT=ibgda
-          export NVSHMEM_DISABLE_GDR=0
+          # NIXL Configuration
+          export USE_NIXL=1
+          export HYBRID_EP_MULTINODE=1
+          export NIXL_ETCD_ENDPOINTS=http://etcd.${NAMESPACE}.svc.cluster.local:2379
           
-          # Enable P2P (Once Google fixes the errno=14 bug)
-          export NVSHMEM_DISABLE_P2P=0
+          # Performance Tuning (Optional but recommended)
+          export DEEPEP_NIXL_GDA_NUM_CHANNELS=1
           
-          # Cloud Virtual Network Fixes
-          # export NVSHMEM_IBGDA_USE_DCT=0 
-          # export NVSHMEM_IBGDA_RC_CONNECTIONS=1
+          export RANK=${POD_NAME##*-}
+          export WORLD_SIZE=${NODES}
           
-          # Map the NICs perfectly
-          export NVSHMEM_ENABLE_NIC_PE_MAPPING=1
+          # Run the benchmark
+          # Assuming test_hybrid_ep.py exists or we need to use it.
+          # The documentation mentioned tests/test_hybrid_ep.py
           
-          echo "Running nvshmem-info..."
-          /workspace/nvshmem/install/bin/nvshmem-info -a || true
-          
-          export RANK=${POD_NAME##*-} 
-          export NCCL_NET_PLUGIN=none
-          export NCCL_TUNER_PLUGIN=none
-          
-          # Run the benchmark based on TEST_TYPE.
-          # NVSHMEM_DEBUG* are set in env to trace DMA-Buf registration (ibv_reg_dmabuf_mr).
-          if [ "$TEST_TYPE" == "intranode" ]; then
-            export WORLD_SIZE=1
-            export RANK=0
-            export MASTER_PORT=29501
-            python /workspace/DeepEP/tests/test_intranode.py
-          else
-            python /workspace/DeepEP/tests/test_internode.py
-          fi
+          cd /opt/DeepEP
+          python tests/test_hybrid_ep.py
           
           echo "=================================================="
           echo "Benchmark Finished. Sleeping for log collection..."
@@ -100,7 +126,7 @@ spec:
         - name: MASTER_PORT
           value: "29500"
         - name: MASTER_ADDR
-          value: "deepep-benchmark-0.deepep-headless.${NAMESPACE}.svc.cluster.local"
+          value: "hybrid-ep-benchmark-0.hybrid-ep-headless.${NAMESPACE}.svc.cluster.local"
         - name: WORLD_SIZE
           value: "${NODES}"
         - name: POD_NAME
@@ -109,14 +135,6 @@ spec:
               fieldPath: metadata.name
         - name: TEST_TYPE
           value: "${TEST_TYPE}"
-        # Enable TRACE logging for NVSHMEM memory and transport to showcase DMA-BUF registration
-        - name: NVSHMEM_DEBUG
-          value: "TRACE"
-        - name: NVSHMEM_DEBUG_SUBSYS
-          value: "MEM,TRANSPORT"
-        # We optionally force testing over standard networking if NVLink is not wanted
-        - name: NVSHMEM_DISABLE_P2P
-          value: "1"
         resources:
           limits:
             nvidia.com/gpu: ${GPUS_PER_NODE}
@@ -131,7 +149,7 @@ spec:
         - name: nvidia-install-dir
           mountPath: /usr/local/nvidia
         securityContext:
-          runAsUser: 0 
+          runAsUser: 0
           privileged: true
           capabilities:
             add: ["IPC_LOCK"]
