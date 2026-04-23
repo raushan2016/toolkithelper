@@ -2,6 +2,7 @@
 !pulumi/
 !repro/
 !deepep/
+!deepep/*
 pulumi/*/
 pulumi/.*/
 # Ignore generated and backup files

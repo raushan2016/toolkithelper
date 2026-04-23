@@ -43,7 +43,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hybrid-ep-headless
+  name: hybrid-ep-headless-${RUN_ID}
   namespace: ${NAMESPACE}
   labels:
     app: hybrid-ep
@@ -58,12 +58,12 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: hybrid-ep-benchmark
+  name: hybrid-ep-benchmark-${RUN_ID}
   namespace: ${NAMESPACE}
   labels:
     app: hybrid-ep
 spec:
-  serviceName: 'hybrid-ep-headless'
+  serviceName: 'hybrid-ep-headless-${RUN_ID}'
   podManagementPolicy: Parallel
   replicas: ${NODES}
   selector:
@@ -108,6 +108,10 @@ spec:
           # Performance Tuning (Optional but recommended)
           export DEEPEP_NIXL_GDA_NUM_CHANNELS=1
           
+          export NCCL_TUNER_PLUGIN=none
+          export NCCL_NET_PLUGIN=none
+          export UCX_NET_DEVICES=all
+          
           export RANK=${POD_NAME##*-}
           export WORLD_SIZE=${NODES}
           
@@ -123,10 +127,12 @@ spec:
           echo "=================================================="
           sleep infinity
         env:
+        - name: LD_PRELOAD
+          value: "/usr/lib/x86_64-linux-gnu/libnccl.so.2"
         - name: MASTER_PORT
           value: "29500"
         - name: MASTER_ADDR
-          value: "hybrid-ep-benchmark-0.hybrid-ep-headless.${NAMESPACE}.svc.cluster.local"
+          value: "hybrid-ep-benchmark-${RUN_ID}-0.hybrid-ep-headless-${RUN_ID}.${NAMESPACE}.svc.cluster.local"
         - name: WORLD_SIZE
           value: "${NODES}"
         - name: POD_NAME
