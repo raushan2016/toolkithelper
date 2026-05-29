@@ -1,6 +1,6 @@
 # DeepEP Benchmark Toolkit for GKE
 
-This directory contains a complete, optimized toolkit for building, deploying, and running DeepEP (Deep Embedding Parallelism) benchmarks on Google Kubernetes Engine (GKE). It is specifically tailored for high-performance clusters utilizing A3 Ultra (H200) hardware with GPUDirect RDMA.
+This directory contains a complete, optimized toolkit for building, deploying, and running DeepEP (Deep Expert Parallelism) benchmarks on Google Kubernetes Engine (GKE). It is specifically tailored for high-performance clusters utilizing A3 Ultra (H200) hardware with GPUDirect RDMA.
 
 ## Architecture
 
